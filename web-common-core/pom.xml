@@ -22,13 +22,25 @@
     <parent>
         <groupId>tech.rollw.common</groupId>
         <artifactId>web-common-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.1.0</version>
         <relativePath>../web-common-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>web-common-core</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>space.lingu.fiesta</groupId>
             <artifactId>fiesta-annotations</artifactId>
