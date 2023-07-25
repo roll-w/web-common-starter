@@ -1,12 +1,28 @@
 # Web Common Starter
 
-A utility library for web development.
+A utility library for web development in Spring Boot.
 
 ## Requirements
 
 - Java version 17 or higher
 
-Built with Spring Boot 2.7.14, should work with Spring Boot 3.x as well.
+Built with Spring Boot 2.7.14.
+As for SpringBoot 3.x, it has API updates that are not compatible with 2.x. 
+Like the `javax.validation` to `jakarta.validation`, so it is not supported yet.
+
+## Usage
+
+Run `mvn install` to install the library to your local repository.
+
+Add the dependency to your project:
+
+```xml
+<dependency>
+    <groupId>tech.rollw.common</groupId>
+    <artifactId>web-common-spring-boot-starter</artifactId>
+    <version>0.1.0</version>
+</dependency>
+```
 
 ## License
 
