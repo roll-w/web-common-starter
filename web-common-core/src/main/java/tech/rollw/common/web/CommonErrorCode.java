@@ -107,6 +107,10 @@ public enum CommonErrorCode implements ErrorCode, ErrorCodeFinder, ErrorCodeMess
         return CODES;
     }
 
+    public static ErrorCodeFinder getFinderInstance() {
+        return ERROR_UNKNOWN;
+    }
+
     @Nullable
     private static CommonErrorCode nullableFrom(String value) {
         for (CommonErrorCode errorCode : values()) {

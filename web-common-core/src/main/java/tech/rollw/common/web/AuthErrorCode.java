@@ -21,7 +21,7 @@ import space.lingu.NonNull;
 import java.util.List;
 
 /**
- * Authentication & Authorization Error Code.
+ * Authentication and Authorization Error Code.
  * <p>
  * From A1000 to A1049.
  *
@@ -29,41 +29,18 @@ import java.util.List;
  */
 public enum AuthErrorCode implements ErrorCode, ErrorCodeFinder, ErrorCodeMessageProvider {
     SUCCESS(SUCCESS_CODE, 200),
-
-    /**
-     * 认证错误
-     */
     ERROR_AUTH("A1000", 401),
-    /**
-     * 无效令牌
-     */
     ERROR_INVALID_TOKEN("A1001", 401),
-    /**
-     * 令牌过期
-     */
     ERROR_TOKEN_EXPIRED("A1002", 401),
-    /**
-     * 令牌未过期
-     */
     ERROR_TOKEN_NOT_EXPIRED("A1003", 401),
     ERROR_TOKEN_EXISTED("A1004", 401),
     ERROR_TOKEN_NOT_EXIST("A1005", 401),
     ERROR_TOKEN_NOT_MATCH("A1006", 401),
     ERROR_TOKEN_USED("A1007", 401),
     ERROR_TOKEN_NOT_USED("A1008", 401),
-    /**
-     * 未认证
-     */
     ERROR_UNAUTHORIZED_USE("A1009", 403),
-    /**
-     * 无权限访问
-     */
     ERROR_NOT_HAS_ROLE("A1010", 401),
-    /**
-     * 黑名单用户
-     */
     ERROR_IN_BLOCKLIST("A1011", 401),
-
     ERROR_NO_HANDLER("A1012", 404),
     ERROR_UNKNOWN_AUTH("A1013", 401),
     ERROR_PERMISSION_DENIED("A1014", 403);

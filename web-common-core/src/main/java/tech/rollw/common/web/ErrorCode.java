@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 /**
  * <h2>Error Code</h2>
+ * Define the error codes of the system.
  *
  * <h3>Error Code Naming Format</h3>
  * <ul>
