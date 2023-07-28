@@ -19,10 +19,10 @@ package tech.rollw.common.web.system;
 /**
  * @author RollW
  */
-public interface SystemResourceAuthenticationProviderFactory {
-    SystemResourceAuthenticationProvider
+public interface SystemResourceAuthenticationProviderFactory<ID> {
+    SystemResourceAuthenticationProvider<ID>
     getSystemResourceAuthenticationProvider(SystemResourceKind resourceKind);
 
     void setDefaultSystemResourceAuthenticationProvider(
-            SystemResourceAuthenticationProvider systemResourceAuthenticationProvider);
+            SystemResourceAuthenticationProvider<ID> systemResourceAuthenticationProvider);
 }

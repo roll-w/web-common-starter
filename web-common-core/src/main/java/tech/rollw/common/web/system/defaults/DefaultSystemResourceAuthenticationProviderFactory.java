@@ -26,20 +26,20 @@ import java.util.List;
 /**
  * @author RollW
  */
-public class DefaultSystemResourceAuthenticationProviderFactory
-        implements SystemResourceAuthenticationProviderFactory {
-    private final List<SystemResourceAuthenticationProvider> authenticationProviders;
-    private SystemResourceAuthenticationProvider defaultSystemResourceAuthenticationProvider;
+public class DefaultSystemResourceAuthenticationProviderFactory<ID>
+        implements SystemResourceAuthenticationProviderFactory<ID> {
+    private final List<SystemResourceAuthenticationProvider<? extends ID>> authenticationProviders;
+    private SystemResourceAuthenticationProvider<? extends ID> defaultSystemResourceAuthenticationProvider;
 
-    public DefaultSystemResourceAuthenticationProviderFactory(List<SystemResourceAuthenticationProvider> authenticationProviders) {
+    public DefaultSystemResourceAuthenticationProviderFactory(List<SystemResourceAuthenticationProvider<? extends ID>> authenticationProviders) {
         this.authenticationProviders = authenticationProviders;
-        defaultSystemResourceAuthenticationProvider = DefaultProvider.INSTANCE;
+        setDefaultSystemResourceAuthenticationProvider(getDefaultProvider());
     }
 
     @Override
-    public SystemResourceAuthenticationProvider getSystemResourceAuthenticationProvider(
+    public SystemResourceAuthenticationProvider<ID> getSystemResourceAuthenticationProvider(
             SystemResourceKind resourceKind) {
-        SystemResourceAuthenticationProvider systemResourceAuthenticationProvider =
+        SystemResourceAuthenticationProvider<ID> systemResourceAuthenticationProvider =
                 findFirstAuthenticationProvider(resourceKind);
         if (systemResourceAuthenticationProvider == null) {
             throw new SystemResourceException(AuthErrorCode.ERROR_NO_HANDLER,
@@ -51,19 +51,20 @@ public class DefaultSystemResourceAuthenticationProviderFactory
 
     @Override
     public void setDefaultSystemResourceAuthenticationProvider(
-            SystemResourceAuthenticationProvider systemResourceAuthenticationProvider) {
+            SystemResourceAuthenticationProvider<ID> systemResourceAuthenticationProvider) {
         this.defaultSystemResourceAuthenticationProvider = systemResourceAuthenticationProvider;
     }
 
-    private SystemResourceAuthenticationProvider findFirstAuthenticationProvider(
+    @SuppressWarnings("unchecked")
+    private SystemResourceAuthenticationProvider<ID> findFirstAuthenticationProvider(
             SystemResourceKind resourceKind) {
-        return authenticationProviders.stream()
+        return (SystemResourceAuthenticationProvider<ID>) authenticationProviders.stream()
                 .filter(authenticationProvider -> authenticationProvider.isAuthentication(resourceKind))
                 .findFirst()
                 .orElse(defaultSystemResourceAuthenticationProvider);
     }
 
-    private static class DefaultProvider implements SystemResourceAuthenticationProvider {
+    private static class DefaultProvider<ID> implements SystemResourceAuthenticationProvider<ID> {
         private DefaultProvider() {
         }
 
@@ -74,16 +75,16 @@ public class DefaultSystemResourceAuthenticationProviderFactory
 
         @NonNull
         @Override
-        public SystemAuthentication authenticate(SystemResource systemResource,
-                                                 Operator operator, Action action) {
-            return new SimpleSystemAuthentication(systemResource, operator, true);
+        public SystemAuthentication<ID> authenticate(SystemResource<ID> systemResource,
+                                                     Operator operator, Action action) {
+            return new SimpleSystemAuthentication<>(systemResource, operator, true);
         }
 
-        static final DefaultProvider INSTANCE = new DefaultProvider();
+        static final DefaultProvider<Object> INSTANCE = new DefaultProvider<>();
     }
 
-
-    public static SystemResourceAuthenticationProvider getDefaultProvider() {
-        return DefaultProvider.INSTANCE;
+    @SuppressWarnings("unchecked")
+    public static <ID> SystemResourceAuthenticationProvider<ID> getDefaultProvider() {
+        return (SystemResourceAuthenticationProvider<ID>) DefaultProvider.INSTANCE;
     }
 }

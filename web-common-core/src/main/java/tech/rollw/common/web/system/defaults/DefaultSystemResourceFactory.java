@@ -24,28 +24,29 @@ import java.util.List;
 /**
  * @author RollW
  */
-public class DefaultSystemResourceFactory implements SystemResourceFactory {
-    private final List<SystemResourceProvider> systemResourceProviders;
+public class DefaultSystemResourceFactory<ID> implements SystemResourceFactory<ID> {
+    private final List<SystemResourceProvider<? extends ID>> systemResourceProviders;
 
-    public DefaultSystemResourceFactory(List<SystemResourceProvider> systemResourceProviders) {
+    public DefaultSystemResourceFactory(List<SystemResourceProvider<? extends ID>> systemResourceProviders) {
         this.systemResourceProviders = systemResourceProviders;
     }
 
     @Override
-    public SystemResource getSystemResource(long resourceId,
-                                            SystemResourceKind systemResourceKind)
+    public SystemResource<ID> getSystemResource(ID resourceId,
+                                                SystemResourceKind systemResourceKind)
             throws BusinessRuntimeException, UnsupportedKindException {
-        SystemResourceProvider systemResourceProvider = findFirstProvider(systemResourceKind);
+        SystemResourceProvider<ID> systemResourceProvider = findFirstProvider(systemResourceKind);
         return systemResourceProvider.provide(resourceId, systemResourceKind);
     }
 
     @Override
-    public SystemResource getSystemResource(SystemResource systemResource) {
+    public SystemResource<ID> getSystemResource(SystemResource<ID> systemResource) {
         return getSystemResource(systemResource.getResourceId(), systemResource.getSystemResourceKind());
     }
 
-    private SystemResourceProvider findFirstProvider(SystemResourceKind systemResourceKind) {
-        return systemResourceProviders.stream()
+    @SuppressWarnings("unchecked")
+    private SystemResourceProvider<ID> findFirstProvider(SystemResourceKind systemResourceKind) {
+        return (SystemResourceProvider<ID>) systemResourceProviders.stream()
                 .filter(systemResourceProvider -> systemResourceProvider.supports(systemResourceKind))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("No provider found for resource kind: " + systemResourceKind));

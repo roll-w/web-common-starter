@@ -23,25 +23,26 @@ import java.util.List;
 /**
  * @author RollW
  */
-public class DefaultSystemResourceOperatorProvider implements SystemResourceOperatorProvider {
-    private final List<SystemResourceOperatorFactory> systemResourceOperatorFactories;
+public class DefaultSystemResourceOperatorProvider<ID> implements SystemResourceOperatorProvider<ID> {
+    private final List<SystemResourceOperatorFactory<? extends ID>> systemResourceOperatorFactories;
 
-    public DefaultSystemResourceOperatorProvider(List<SystemResourceOperatorFactory> systemResourceOperatorFactories) {
+    public DefaultSystemResourceOperatorProvider(
+            List<SystemResourceOperatorFactory<? extends ID>> systemResourceOperatorFactories) {
         this.systemResourceOperatorFactories = systemResourceOperatorFactories;
     }
 
     @Override
-    public <T extends SystemResourceOperator> T getSystemResourceOperator(
-            SystemResource systemResource) {
+    public <T extends SystemResourceOperator<ID>> T getSystemResourceOperator(
+            SystemResource<ID> systemResource) {
         return getSystemResourceOperator(systemResource, true);
     }
 
     @Override
-    public <T extends SystemResourceOperator> T getSystemResourceOperator(
-            SystemResource systemResource, boolean checkDelete) {
-        SystemResourceOperatorFactory systemResourceOperatorFactory =
+    public <T extends SystemResourceOperator<ID>> T getSystemResourceOperator(
+            SystemResource<ID> systemResource, boolean checkDelete) {
+        SystemResourceOperatorFactory<ID> systemResourceOperatorFactory =
                 findFirstOf(systemResource.getSystemResourceKind());
-        SystemResourceOperator systemResourceOperator =
+        SystemResourceOperator<ID> systemResourceOperator =
                 systemResourceOperatorFactory.createResourceOperator(systemResource, checkDelete);
         try {
             return (T) systemResourceOperator;
@@ -55,14 +56,14 @@ public class DefaultSystemResourceOperatorProvider implements SystemResourceOper
     }
 
     @Override
-    public <T extends SystemResourceOperator> T getSystemResourceOperator(
-            SystemResource systemResource,
+    public <T extends SystemResourceOperator<ID>> T getSystemResourceOperator(
+            SystemResource<ID> systemResource,
             SystemResourceKind targetSystemResourceKind,
             boolean checkDelete) {
-        SystemResourceOperatorFactory systemResourceOperatorFactory = findFirstOf(
+        SystemResourceOperatorFactory<ID> systemResourceOperatorFactory = findFirstOf(
                 targetSystemResourceKind
         );
-        SystemResourceOperator systemResourceOperator = systemResourceOperatorFactory.createResourceOperator(
+        SystemResourceOperator<ID> systemResourceOperator = systemResourceOperatorFactory.createResourceOperator(
                 systemResource,
                 targetSystemResourceKind,
                 checkDelete
@@ -79,8 +80,8 @@ public class DefaultSystemResourceOperatorProvider implements SystemResourceOper
     }
 
     @Override
-    public <T extends SystemResourceOperator> T getSystemResourceOperator(
-            SystemResource systemResource,
+    public <T extends SystemResourceOperator<ID>> T getSystemResourceOperator(
+            SystemResource<ID> systemResource,
             SystemResourceKind targetSystemResourceKind) {
         return getSystemResourceOperator(
                 systemResource,
@@ -89,15 +90,16 @@ public class DefaultSystemResourceOperatorProvider implements SystemResourceOper
         );
     }
 
-    private SystemResourceOperatorFactory findFirstOf(SystemResourceKind kind) {
-        return systemResourceOperatorFactories.stream()
+    @SuppressWarnings("unchecked")
+    private SystemResourceOperatorFactory<ID> findFirstOf(SystemResourceKind kind) {
+        return (SystemResourceOperatorFactory<ID>) systemResourceOperatorFactories.stream()
                 .filter(factory -> factory.supports(kind))
                 .findFirst()
                 .orElseThrow((() -> noFactoryConfiguredForKind(kind)));
     }
 
     private IllegalArgumentException noFactoryConfiguredForKindAndType(
-            SystemResourceKind kind, Class<? extends SystemResourceOperator> clazz,
+            SystemResourceKind kind, Class<?> clazz,
             String message) {
         return new IllegalArgumentException("No system resource operator factory configured for kind:"
                 + kind + " and type:" + clazz + ". " + message);

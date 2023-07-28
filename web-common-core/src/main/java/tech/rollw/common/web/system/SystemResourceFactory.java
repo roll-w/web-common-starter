@@ -21,11 +21,11 @@ import tech.rollw.common.web.BusinessRuntimeException;
 /**
  * @author RollW
  */
-public interface SystemResourceFactory {
-    SystemResource getSystemResource(long resourceId,
-                                     SystemResourceKind systemResourceKind)
+public interface SystemResourceFactory<ID> {
+    SystemResource<ID> getSystemResource(ID resourceId,
+                                         SystemResourceKind systemResourceKind)
             throws BusinessRuntimeException, UnsupportedKindException;
 
-    SystemResource getSystemResource(SystemResource systemResource)
+    SystemResource<ID> getSystemResource(SystemResource<ID> systemResource)
             throws BusinessRuntimeException, UnsupportedKindException;
 }

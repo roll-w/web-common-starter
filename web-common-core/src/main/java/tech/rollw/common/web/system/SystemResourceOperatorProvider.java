@@ -21,19 +21,19 @@ package tech.rollw.common.web.system;
  *
  * @author RollW
  */
-public interface SystemResourceOperatorProvider {
-    <T extends SystemResourceOperator> T
-    getSystemResourceOperator(SystemResource systemResource);
+public interface SystemResourceOperatorProvider<ID> {
+    <T extends SystemResourceOperator<ID>> T
+    getSystemResourceOperator(SystemResource<ID> systemResource);
 
-    <T extends SystemResourceOperator> T
-    getSystemResourceOperator(SystemResource systemResource, boolean checkDelete);
+    <T extends SystemResourceOperator<ID>> T
+    getSystemResourceOperator(SystemResource<ID> systemResource, boolean checkDelete);
 
-    <T extends SystemResourceOperator> T
-    getSystemResourceOperator(SystemResource systemResource,
+    <T extends SystemResourceOperator<ID>> T
+    getSystemResourceOperator(SystemResource<ID> systemResource,
                               SystemResourceKind targetSystemResourceKind,
                               boolean checkDelete);
 
-    <T extends SystemResourceOperator> T
-    getSystemResourceOperator(SystemResource systemResource,
+    <T extends SystemResourceOperator<ID>> T
+    getSystemResourceOperator(SystemResource<ID> systemResource,
                               SystemResourceKind targetSystemResourceKind);
 }

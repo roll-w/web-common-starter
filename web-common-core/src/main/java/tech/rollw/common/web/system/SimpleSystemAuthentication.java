@@ -21,12 +21,12 @@ import tech.rollw.common.web.AuthErrorCode;
 /**
  * @author RollW
  */
-public class SimpleSystemAuthentication implements SystemAuthentication {
-    private final SystemResource systemResource;
+public class SimpleSystemAuthentication<ID> implements SystemAuthentication<ID> {
+    private final SystemResource<ID> systemResource;
     private final Operator operator;
     private final boolean allow;
 
-    public SimpleSystemAuthentication(SystemResource systemResource,
+    public SimpleSystemAuthentication(SystemResource<ID> systemResource,
                                       Operator operator,
                                       boolean allow) {
         this.systemResource = systemResource;
@@ -45,7 +45,7 @@ public class SimpleSystemAuthentication implements SystemAuthentication {
     }
 
     @Override
-    public SystemResource getSystemResource() {
+    public SystemResource<ID> getSystemResource() {
         return systemResource;
     }
 

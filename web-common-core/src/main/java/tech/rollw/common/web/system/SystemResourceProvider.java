@@ -21,7 +21,7 @@ import tech.rollw.common.web.BusinessRuntimeException;
 /**
  * @author RollW
  */
-public interface SystemResourceProvider extends SystemResourceSupportable {
+public interface SystemResourceProvider<ID> extends SystemResourceSupportable {
     @Override
     boolean supports(SystemResourceKind systemResourceKind);
 
@@ -33,7 +33,7 @@ public interface SystemResourceProvider extends SystemResourceSupportable {
      * @return the system resource
      * @throws UnsupportedKindException if the system resource kind is not supported.
      */
-    SystemResource provide(long resourceId,
+    SystemResource<ID> provide(ID resourceId,
                            SystemResourceKind systemResourceKind)
             throws BusinessRuntimeException, UnsupportedKindException;
 }

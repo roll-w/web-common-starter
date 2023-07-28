@@ -24,29 +24,29 @@ import tech.rollw.common.web.BusinessRuntimeException;
  *
  * @author RollW
  */
-public interface SystemResourceOperator extends ByStatusProvider, Castable<SystemResourceOperator> {
+public interface SystemResourceOperator<ID> extends ByStatusProvider, Castable<SystemResourceOperator<ID>> {
     /**
      * For some system resources that may not be updated automatically
      * (such as some batch operations), you need to call this method
      * to update.
      */
-    SystemResource update() throws BusinessRuntimeException;
+    SystemResource<ID> update() throws BusinessRuntimeException;
 
     /**
      * Delete the system resource.
      */
-    SystemResource delete() throws BusinessRuntimeException;
+    SystemResource<ID> delete() throws BusinessRuntimeException;
 
     /**
      * Rename the system resource.
      */
-    SystemResource rename(String newName) throws BusinessRuntimeException,
+    SystemResource<ID> rename(String newName) throws BusinessRuntimeException,
             UnsupportedOperationException;
 
     /**
      * Disable auto update for the next operations.
      */
-    default SystemResourceOperator disableAutoUpdate() {
+    default SystemResourceOperator<ID> disableAutoUpdate() {
         throw new UnsupportedOperationException("The system resource operator "
                 + getSystemResource().getSystemResourceKind()
                 + " does not support switch auto update.");
@@ -55,7 +55,7 @@ public interface SystemResourceOperator extends ByStatusProvider, Castable<Syste
     /**
      * Enable auto update for the next operations. (Default)
      */
-    default SystemResourceOperator enableAutoUpdate() {
+    default SystemResourceOperator<ID> enableAutoUpdate() {
         throw new UnsupportedOperationException("The system resource operator "
                 + getSystemResource().getSystemResourceKind()
                 + " does not support switch auto update.");
@@ -84,5 +84,5 @@ public interface SystemResourceOperator extends ByStatusProvider, Castable<Syste
     /**
      * Get the system resource that this operator is operating on.
      */
-    SystemResource getSystemResource();
+    SystemResource<ID> getSystemResource();
 }

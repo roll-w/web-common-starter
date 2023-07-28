@@ -19,8 +19,8 @@ package tech.rollw.common.web.system;
 /**
  * @author RollW
  */
-public interface SystemAuthentication {
-    SystemResource getSystemResource();
+public interface SystemAuthentication<ID> {
+    SystemResource<ID> getSystemResource();
 
     Operator getOperator();
 

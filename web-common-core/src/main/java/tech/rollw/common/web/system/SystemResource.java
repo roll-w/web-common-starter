@@ -21,10 +21,15 @@ import tech.rollw.common.Castable;
 /**
  * Define the system resource.
  *
+ * @param <ID> the type of the system resource id
  * @author RollW
+ * @apiNote Should always keep the {@link ID} the same type within
+ * the same {@link SystemResourceKind}, or it will cause some
+ * unexpected errors like {@link ClassCastException} when trying to
+ * cast the given ID to the specific type.
  */
-public interface SystemResource extends SystemResourceKind.Kind, Castable<SystemResource> {
-    long getResourceId();
+public interface SystemResource<ID> extends SystemResourceKind.Kind, Castable<SystemResource<ID>> {
+    ID getResourceId();
 
     @Override
     SystemResourceKind getSystemResourceKind();

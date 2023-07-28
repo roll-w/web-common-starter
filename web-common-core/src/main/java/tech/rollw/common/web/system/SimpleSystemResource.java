@@ -20,11 +20,11 @@ package tech.rollw.common.web.system;
  * @author RollW
  */
 public record SimpleSystemResource(
-        long resourceId,
+        String resourceId,
         SystemResourceKind systemResourceKind
 ) implements SystemResource {
     @Override
-    public long getResourceId() {
+    public String getResourceId() {
         return resourceId;
     }
 
