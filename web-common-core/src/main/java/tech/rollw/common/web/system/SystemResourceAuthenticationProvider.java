@@ -27,15 +27,16 @@ public interface SystemResourceAuthenticationProvider<ID> {
     boolean isAuthentication(SystemResourceKind resourceKind);
 
     @NonNull
-    SystemAuthentication authenticate(SystemResource<ID> systemResource,
-                                      Operator operator, Action action);
+    SystemAuthentication<ID> authenticate(SystemResource<ID> systemResource,
+                                          Operator operator, Action action,
+                                          SystemAuthenticateCredentials credentials);
 
     @NonNull
-    default List<SystemAuthentication> authenticate(
+    default List<SystemAuthentication<ID>> authenticate(
             @NonNull List<? extends SystemResource<ID>> systemResources,
-            Operator operator, Action action) {
+            Operator operator, Action action, SystemAuthenticateCredentials credentials) {
         return systemResources.stream()
-                .map(systemResource -> authenticate(systemResource, operator, action))
+                .map(systemResource -> authenticate(systemResource, operator, action, credentials))
                 .toList();
     }
 }

@@ -19,19 +19,13 @@ package tech.rollw.common.web.system;
 /**
  * @author RollW
  */
-public interface SystemAuthentication<ID> {
-    SystemResource<ID> getSystemResource();
+public class EmptyCredentials implements SystemAuthenticateCredentials {
+    private static final EmptyCredentials INSTANCE = new EmptyCredentials();
 
-    Operator getOperator();
+    private EmptyCredentials() {
+    }
 
-    SystemAuthenticateCredentials getAuthenticateCredentials();
-
-    boolean isAuthenticated();
-
-    boolean isAllowAccess();
-
-    /**
-     * Throws an {@link AuthenticationException} if the user is not authenticated.
-     */
-    void throwAuthenticationException() throws AuthenticationException;
+    public static EmptyCredentials getInstance() {
+        return INSTANCE;
+    }
 }

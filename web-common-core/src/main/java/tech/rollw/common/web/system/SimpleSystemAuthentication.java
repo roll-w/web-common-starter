@@ -24,13 +24,16 @@ import tech.rollw.common.web.AuthErrorCode;
 public class SimpleSystemAuthentication<ID> implements SystemAuthentication<ID> {
     private final SystemResource<ID> systemResource;
     private final Operator operator;
+    private final SystemAuthenticateCredentials credentials;
     private final boolean allow;
 
     public SimpleSystemAuthentication(SystemResource<ID> systemResource,
                                       Operator operator,
+                                      SystemAuthenticateCredentials credentials,
                                       boolean allow) {
         this.systemResource = systemResource;
         this.operator = operator;
+        this.credentials = credentials;
         this.allow = allow;
     }
 
@@ -51,6 +54,11 @@ public class SimpleSystemAuthentication<ID> implements SystemAuthentication<ID> 
 
     public Operator getOperator() {
         return operator;
+    }
+
+    @Override
+    public SystemAuthenticateCredentials getAuthenticateCredentials() {
+        return credentials;
     }
 
     public boolean isAllow() {
