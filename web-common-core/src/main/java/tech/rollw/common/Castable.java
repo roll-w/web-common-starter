@@ -23,8 +23,8 @@ import space.lingu.NonNull;
  *
  * @author RollW
  */
-public interface Castable<T> {
-    default T cast(@NonNull Class<T> clazz) {
+public interface Castable {
+    default <T> T cast(@NonNull Class<T> clazz) {
         return clazz.cast(this);
     }
 }

@@ -28,7 +28,7 @@ import tech.rollw.common.Castable;
  * unexpected errors like {@link ClassCastException} when trying to
  * cast the given ID to the specific type.
  */
-public interface SystemResource<ID> extends SystemResourceKind.Kind, Castable<SystemResource<ID>> {
+public interface SystemResource<ID> extends SystemResourceKind.Kind, Castable {
     ID getResourceId();
 
     @Override

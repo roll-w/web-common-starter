@@ -76,8 +76,9 @@ public class DefaultSystemResourceAuthenticationProviderFactory<ID>
         @NonNull
         @Override
         public SystemAuthentication<ID> authenticate(SystemResource<ID> systemResource,
-                                                     Operator operator, Action action) {
-            return new SimpleSystemAuthentication<>(systemResource, operator, true);
+                                                     Operator operator, Action action,
+                                                     SystemAuthenticateCredentials credentials) {
+            return new SimpleSystemAuthentication<>(systemResource, operator, credentials, true);
         }
 
         static final DefaultProvider<Object> INSTANCE = new DefaultProvider<>();

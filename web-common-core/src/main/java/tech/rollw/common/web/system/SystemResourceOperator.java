@@ -24,13 +24,21 @@ import tech.rollw.common.web.BusinessRuntimeException;
  *
  * @author RollW
  */
-public interface SystemResourceOperator<ID> extends ByStatusProvider, Castable<SystemResourceOperator<ID>> {
+public interface SystemResourceOperator<ID> extends ByStatusProvider, Castable {
     /**
      * For some system resources that may not be updated automatically
      * (such as some batch operations), you need to call this method
      * to update.
+     *
+     * @throws UnsupportedOperationException if the system resource does not
+     *                                       support update manually.
      */
-    SystemResource<ID> update() throws BusinessRuntimeException;
+    default SystemResource<ID> update() throws BusinessRuntimeException, UnsupportedOperationException {
+        throw new UnsupportedOperationException("The system resource operator "
+                + getSystemResource().getSystemResourceKind()
+                + " does not support update.");
+    }
+
 
     /**
      * Delete the system resource.
@@ -38,10 +46,27 @@ public interface SystemResourceOperator<ID> extends ByStatusProvider, Castable<S
     SystemResource<ID> delete() throws BusinessRuntimeException;
 
     /**
-     * Rename the system resource.
+     * Restore the system resource.
+     *
+     * @throws UnsupportedOperationException if the system resource does not support restore.
      */
-    SystemResource<ID> rename(String newName) throws BusinessRuntimeException,
-            UnsupportedOperationException;
+    default SystemResource<ID> restore() throws BusinessRuntimeException, UnsupportedOperationException {
+        throw new UnsupportedOperationException("The system resource operator "
+                + getSystemResource().getSystemResourceKind()
+                + " does not support restore.");
+    }
+
+    /**
+     * Rename the system resource.
+     *
+     * @throws UnsupportedOperationException if the system resource does not support rename.
+     */
+    default SystemResource<ID> rename(String newName) throws BusinessRuntimeException,
+            UnsupportedOperationException {
+        throw new UnsupportedOperationException("The system resource operator "
+                + getSystemResource().getSystemResourceKind()
+                + " does not support rename.");
+    }
 
     /**
      * Disable auto update for the next operations.
