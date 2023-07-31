@@ -16,16 +16,19 @@
 
 package tech.rollw.common.web.system;
 
+import space.lingu.NonNull;
 import tech.rollw.common.web.BusinessRuntimeException;
 
 /**
  * @author RollW
  */
 public interface SystemResourceFactory<ID> {
-    SystemResource<ID> getSystemResource(ID resourceId,
-                                         SystemResourceKind systemResourceKind)
+    @NonNull
+    SystemResource<ID> getSystemResource(@NonNull ID resourceId,
+                                         @NonNull SystemResourceKind systemResourceKind)
             throws BusinessRuntimeException, UnsupportedKindException;
 
-    SystemResource<ID> getSystemResource(SystemResource<ID> systemResource)
+    @NonNull
+    SystemResource<ID> getSystemResource(@NonNull SystemResource<ID> systemResource)
             throws BusinessRuntimeException, UnsupportedKindException;
 }

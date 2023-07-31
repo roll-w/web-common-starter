@@ -16,18 +16,21 @@
 
 package tech.rollw.common.web.system;
 
+import space.lingu.NonNull;
+
 /**
  * @author RollW
  */
-public record SimpleSystemResource(
-        String resourceId,
+public record SimpleSystemResource<ID>(
+        ID resourceId,
         SystemResourceKind systemResourceKind
-) implements SystemResource {
+) implements SystemResource<ID> {
     @Override
-    public String getResourceId() {
+    public ID getResourceId() {
         return resourceId;
     }
 
+    @NonNull
     @Override
     public SystemResourceKind getSystemResourceKind() {
         return systemResourceKind;

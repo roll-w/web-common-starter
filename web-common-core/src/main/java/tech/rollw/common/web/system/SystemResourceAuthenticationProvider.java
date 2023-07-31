@@ -23,8 +23,9 @@ import java.util.List;
 /**
  * @author RollW
  */
-public interface SystemResourceAuthenticationProvider<ID> {
-    boolean isAuthentication(SystemResourceKind resourceKind);
+public interface SystemResourceAuthenticationProvider<ID> extends SystemResourceSupportable {
+    @Override
+    boolean supports(@NonNull SystemResourceKind systemResourceKind);
 
     @NonNull
     SystemAuthentication<ID> authenticate(SystemResource<ID> systemResource,

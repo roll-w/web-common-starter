@@ -59,7 +59,7 @@ public class DefaultSystemResourceAuthenticationProviderFactory<ID>
     private SystemResourceAuthenticationProvider<ID> findFirstAuthenticationProvider(
             SystemResourceKind resourceKind) {
         return (SystemResourceAuthenticationProvider<ID>) authenticationProviders.stream()
-                .filter(authenticationProvider -> authenticationProvider.isAuthentication(resourceKind))
+                .filter(authenticationProvider -> authenticationProvider.supports(resourceKind))
                 .findFirst()
                 .orElse(defaultSystemResourceAuthenticationProvider);
     }
@@ -68,8 +68,9 @@ public class DefaultSystemResourceAuthenticationProviderFactory<ID>
         private DefaultProvider() {
         }
 
+
         @Override
-        public boolean isAuthentication(SystemResourceKind resourceKind) {
+        public boolean supports(@NonNull SystemResourceKind systemResourceKind) {
             return true;
         }
 

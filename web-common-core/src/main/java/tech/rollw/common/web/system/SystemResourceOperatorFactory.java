@@ -16,21 +16,23 @@
 
 package tech.rollw.common.web.system;
 
+import space.lingu.NonNull;
+
 /**
  * @author RollW
  */
 public interface SystemResourceOperatorFactory<ID> extends SystemResourceSupportable {
     @Override
-    boolean supports(SystemResourceKind systemResourceKind);
+    boolean supports(@NonNull SystemResourceKind systemResourceKind);
 
-    boolean isAssignableTo(Class<? extends SystemResourceOperator<ID>> clazz);
-
+    @NonNull
     SystemResourceOperator<ID> createResourceOperator(
             SystemResource<ID> systemResource,
             boolean checkDelete
     );
 
-    default SystemResourceOperator<ID> createResourceOperator(SystemResource<ID> systemResource) {
+    @NonNull
+    default SystemResourceOperator<ID> createResourceOperator(@NonNull SystemResource<ID> systemResource) {
         return createResourceOperator(systemResource, true);
     }
 
@@ -41,17 +43,19 @@ public interface SystemResourceOperatorFactory<ID> extends SystemResourceSupport
      * Will check the target system resource kind is supported by
      * this factory.
      */
+    @NonNull
     default SystemResourceOperator<ID> createResourceOperator(
-            SystemResource<ID> systemResource,
-            SystemResourceKind targetSystemResourceKind,
+            @NonNull SystemResource<ID> systemResource,
+            @NonNull  SystemResourceKind targetSystemResourceKind,
             boolean checkDelete
     ) {
         throw new UnsupportedOperationException();
     }
 
+    @NonNull
     default SystemResourceOperator<ID> createResourceOperator(
-            SystemResource<ID> systemResource,
-            SystemResourceKind targetSystemResourceKind
+            @NonNull SystemResource<ID> systemResource,
+            @NonNull SystemResourceKind targetSystemResourceKind
     ) {
         return createResourceOperator(systemResource, targetSystemResourceKind, true);
     }

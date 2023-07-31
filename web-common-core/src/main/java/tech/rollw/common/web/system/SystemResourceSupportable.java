@@ -16,6 +16,8 @@
 
 package tech.rollw.common.web.system;
 
+import space.lingu.NonNull;
+
 /**
  * @author RollW
  */
@@ -23,5 +25,5 @@ public interface SystemResourceSupportable {
     /**
      * Check whether the system resource kind is supported.
      */
-    boolean supports(SystemResourceKind systemResourceKind);
+    boolean supports(@NonNull SystemResourceKind systemResourceKind);
 }

@@ -16,6 +16,7 @@
 
 package tech.rollw.common.web.system.defaults;
 
+import space.lingu.NonNull;
 import tech.rollw.common.web.BusinessRuntimeException;
 import tech.rollw.common.web.system.*;
 
@@ -31,17 +32,21 @@ public class DefaultSystemResourceFactory<ID> implements SystemResourceFactory<I
         this.systemResourceProviders = systemResourceProviders;
     }
 
+    @NonNull
     @Override
-    public SystemResource<ID> getSystemResource(ID resourceId,
-                                                SystemResourceKind systemResourceKind)
+    public SystemResource<ID> getSystemResource(@NonNull ID resourceId,
+                                                @NonNull SystemResourceKind systemResourceKind)
             throws BusinessRuntimeException, UnsupportedKindException {
         SystemResourceProvider<ID> systemResourceProvider = findFirstProvider(systemResourceKind);
         return systemResourceProvider.provide(resourceId, systemResourceKind);
     }
 
+    @NonNull
     @Override
-    public SystemResource<ID> getSystemResource(SystemResource<ID> systemResource) {
-        return getSystemResource(systemResource.getResourceId(), systemResource.getSystemResourceKind());
+    public SystemResource<ID> getSystemResource(@NonNull SystemResource<ID> systemResource) {
+        SystemResourceProvider<ID> systemResourceProvider = findFirstProvider(
+                systemResource.getSystemResourceKind());
+        return systemResourceProvider.provide(systemResource);
     }
 
     @SuppressWarnings("unchecked")

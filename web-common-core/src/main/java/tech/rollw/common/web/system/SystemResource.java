@@ -16,6 +16,7 @@
 
 package tech.rollw.common.web.system;
 
+import space.lingu.NonNull;
 import tech.rollw.common.Castable;
 
 /**
@@ -32,5 +33,6 @@ public interface SystemResource<ID> extends SystemResourceKind.Kind, Castable {
     ID getResourceId();
 
     @Override
+    @NonNull
     SystemResourceKind getSystemResourceKind();
 }

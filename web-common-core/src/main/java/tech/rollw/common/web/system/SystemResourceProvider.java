@@ -16,6 +16,7 @@
 
 package tech.rollw.common.web.system;
 
+import space.lingu.NonNull;
 import tech.rollw.common.web.BusinessRuntimeException;
 
 /**
@@ -23,7 +24,7 @@ import tech.rollw.common.web.BusinessRuntimeException;
  */
 public interface SystemResourceProvider<ID> extends SystemResourceSupportable {
     @Override
-    boolean supports(SystemResourceKind systemResourceKind);
+    boolean supports(@NonNull SystemResourceKind systemResourceKind);
 
     /**
      * Provide a system resource by id and kind.
@@ -33,7 +34,19 @@ public interface SystemResourceProvider<ID> extends SystemResourceSupportable {
      * @return the system resource
      * @throws UnsupportedKindException if the system resource kind is not supported.
      */
-    SystemResource<ID> provide(ID resourceId,
-                           SystemResourceKind systemResourceKind)
+    @NonNull
+    default SystemResource<ID> provide(@NonNull ID resourceId,
+                                       @NonNull SystemResourceKind systemResourceKind)
+            throws BusinessRuntimeException, UnsupportedKindException {
+        return provide(new SimpleSystemResource<>(resourceId, systemResourceKind));
+    }
+
+    /**
+     * Provide a system resource by raw system resource.
+     */
+    @NonNull
+    SystemResource<ID> provide(@NonNull SystemResource<ID> rawSystemResource)
             throws BusinessRuntimeException, UnsupportedKindException;
+
+
 }

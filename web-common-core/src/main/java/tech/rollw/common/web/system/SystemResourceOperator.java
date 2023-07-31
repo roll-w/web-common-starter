@@ -16,6 +16,7 @@
 
 package tech.rollw.common.web.system;
 
+import space.lingu.NonNull;
 import tech.rollw.common.Castable;
 import tech.rollw.common.web.BusinessRuntimeException;
 
@@ -24,7 +25,8 @@ import tech.rollw.common.web.BusinessRuntimeException;
  *
  * @author RollW
  */
-public interface SystemResourceOperator<ID> extends ByStatusProvider, Castable {
+public interface SystemResourceOperator<ID> extends SystemResource<ID>,
+        ByStatusProvider, Castable {
     /**
      * For some system resources that may not be updated automatically
      * (such as some batch operations), you need to call this method
@@ -110,4 +112,16 @@ public interface SystemResourceOperator<ID> extends ByStatusProvider, Castable {
      * Get the system resource that this operator is operating on.
      */
     SystemResource<ID> getSystemResource();
+
+    @Override
+    default ID getResourceId() {
+        return getSystemResource().getResourceId();
+    }
+
+
+    @NonNull
+    @Override
+    default SystemResourceKind getSystemResourceKind() {
+        return getSystemResource().getSystemResourceKind();
+    }
 }
