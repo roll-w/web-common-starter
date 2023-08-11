@@ -8,7 +8,7 @@ A utility library for web development in Spring Boot.
 
 Built with Spring Boot 2.7.14.
 As for SpringBoot 3.x, it has API updates that are not compatible with 2.x. 
-Like the `javax.validation` to `jakarta.validation`, so it is not supported yet.
+Like the `javax.servlet` to `jakarta.servlet`, so it is not supported yet.
 
 ## Usage
 
@@ -23,6 +23,37 @@ Add the dependency to your project:
     <version>0.1.0</version>
 </dependency>
 ```
+
+## How to use
+
+You can check out my other projects for examples.
+
+- [Lamp Blog System](https://github.com/Roll-W/lamp-blog)
+- [Cloud Disk](https://github.com/Roll-W/cloudhub-disk)
+
+This library provides some common interfaces and implementations for web development:
+
+### Base
+
+- `ErrorCode`: An interface for error codes, you can implement it to define your own error codes.
+- `BusinessException`: An exception that contains an error code.
+- `HttpResponseBody`: A wrapper for HTTP response body, it contains the error code and the data.
+- `HttpResponseEntity`: An extension of `ResponseEntity` that contains `HttpResponseBody` as the body.
+
+### Web System
+
+In the `tech.rollw.common.web.system` package, provides interfaces to help you manage 
+the "system resources" in your project.
+
+- `SystemResource`: A `SystemResource` represents a resource in your application, 
+such as a user, a file, a blog post and so on.
+  Typically associated with an entity in your database.
+- `SystemResourceKind`: Represents which kind of the `SystemResource`, you can implement
+it to define your own kinds.
+- `SystemResourceFactory`: The `SystemResourceFactory` is used to create `SystemResource` instances
+by the given ID and the type of the resource.
+  To achieve this, you need to implement the `SystemResourceProvider` interface to handle the creation.
+
 
 ## License
 
