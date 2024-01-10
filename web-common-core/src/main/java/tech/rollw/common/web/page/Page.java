@@ -16,93 +16,70 @@
 
 package tech.rollw.common.web.page;
 
+import space.lingu.NonNull;
+
+import java.util.Collection;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 /**
+ * Page interface.
+ *
  * @author RollW
  */
-@SuppressWarnings({"unused", "ClassCanBeRecord"})
-public class Page<T> implements Pageable {
-    /**
-     * Current page number.
-     */
-    private final int page;
-    /**
-     * Current page size.
-     */
-    private final int size;
-    /**
-     * Total number of items.
-     */
-    private final long total;
-    private final List<T> data;
+public interface Page<E> extends Pageable, List<E> {
 
-    public Page(int page, int size, long total, List<T> data) {
-        this.page = page;
-        this.size = size;
-        this.total = total;
-        this.data = data;
+    long getTotal();
+
+    List<E> getData();
+
+    @Override
+    default boolean add(E e) {
+        throw new UnsupportedOperationException("Page is immutable.");
     }
 
     @Override
-    public int getPage() {
-        return page;
+    default boolean remove(Object o) {
+        throw new UnsupportedOperationException("Page is immutable.");
     }
 
     @Override
-    public int getSize() {
-        return size;
+    default boolean addAll(@NonNull Collection<? extends E> c) {
+        throw new UnsupportedOperationException("Page is immutable.");
     }
 
-    public long getTotal() {
-        return total;
+    @Override
+    default boolean addAll(int index, @NonNull Collection<? extends E> c) {
+        throw new UnsupportedOperationException("Page is immutable.");
     }
 
-    public List<T> getData() {
-        return data;
+    @Override
+    default boolean removeAll(@NonNull Collection<?> c) {
+        throw new UnsupportedOperationException("Page is immutable.");
     }
 
-    public Stream<T> stream() {
-        return data.stream();
+    @Override
+    default boolean retainAll(@NonNull Collection<?> c) {
+        throw new UnsupportedOperationException("Page is immutable.");
     }
 
-    public <R> Page<R> transform(Function<T, R> mapper) {
-        return new Page<>(
-                page, size,
-                total,
-                data.stream().map(mapper).toList()
-        );
+    @Override
+    default void clear() {
+        throw new UnsupportedOperationException("Page is immutable.");
     }
 
-
-    public static <T> Page<T> of(int page, int size,
-                                 int total, List<T> data) {
-        return new Page<>(page, size, total, data);
+    @Override
+    default E set(int index, E element) {
+        throw new UnsupportedOperationException("Page is immutable.");
     }
 
-    public static <T> Page<T> of(Pageable pageable,
-                                 long total, List<T> data) {
-        return new Page<>(
-                pageable.getPage(),
-                pageable.getSize(),
-                total, data
-        );
+    @Override
+    default void add(int index, E element) {
+        throw new UnsupportedOperationException("Page is immutable.");
     }
 
-
-    public static <T> Page<T> of(Page<?> raw,
-                                 Stream<T> data) {
-        return new Page<>(
-                raw.getPage(), raw.getSize(),
-                raw.getTotal(), data.toList()
-        );
+    @Override
+    default E remove(int index) {
+        throw new UnsupportedOperationException("Page is immutable.");
     }
 
-    public static <T> Page<T> of() {
-        return (Page<T>) PAGE;
-    }
-
-    private static final Page<?> PAGE = new Page<>(0, 0, 0, List.of());
 }
