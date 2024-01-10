@@ -16,6 +16,7 @@
 
 package tech.rollw.common.web.system.paged;
 
+import tech.rollw.common.web.page.ImmutablePage;
 import tech.rollw.common.web.page.Order;
 import tech.rollw.common.web.page.Page;
 import tech.rollw.common.web.page.Pageable;
@@ -104,7 +105,7 @@ public class PageableContext implements SystemContext, Pageable {
     }
 
     public <T> Page<T> toPage(List<T> data) {
-        return Page.of(this, total, data);
+        return ImmutablePage.of(this, total, data);
     }
 
     public static PageableContext of(int page, int size) {
