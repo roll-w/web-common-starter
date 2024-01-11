@@ -20,6 +20,7 @@ import space.lingu.NonNull;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Page interface.
@@ -31,6 +32,8 @@ public interface Page<E> extends Pageable, List<E> {
     long getTotal();
 
     List<E> getData();
+
+    <R> Page<R> transform(Function<E, R> mapper);
 
     @Override
     default boolean add(E e) {

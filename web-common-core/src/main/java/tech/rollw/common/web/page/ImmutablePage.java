@@ -77,6 +77,7 @@ public class ImmutablePage<E> implements Page<E> {
         return data.stream();
     }
 
+    @Override
     public <R> Page<R> transform(Function<E, R> mapper) {
         return new ImmutablePage<>(
                 page, size,
@@ -124,6 +125,7 @@ public class ImmutablePage<E> implements Page<E> {
         return data.contains(o);
     }
 
+    @NonNull
     @Override
     public Iterator<E> iterator() {
         return data.iterator();
