@@ -22,7 +22,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.rollw.common.web.components.ContextInitializeFilter;
-import tech.rollw.common.web.system.defaults.PageableContextFactory;
+import tech.rollw.common.web.system.ContextThreadAware;
+import tech.rollw.common.web.system.ThreadLocalContextFactory;
+import tech.rollw.common.web.system.paged.PageableContext;
 
 /**
  * @author RollW
@@ -32,16 +34,17 @@ import tech.rollw.common.web.system.defaults.PageableContextFactory;
 public class SystemContextConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean(PageableContextFactory.class)
-    public PageableContextFactory pageableContextFactory() {
-        return new PageableContextFactory();
+    @ConditionalOnMissingBean(value = PageableContext.class,
+            parameterizedContainer = ContextThreadAware.class)
+    public ContextThreadAware<PageableContext> pageableContextFactory() {
+        return new ThreadLocalContextFactory<>();
     }
 
     @Bean
     @ConditionalOnMissingBean(ContextInitializeFilter.class)
     @ConditionalOnProperty(prefix = "web-common", name = "context-initialize-filter", havingValue = "true")
     public ContextInitializeFilter contextInitializeFilter(
-            PageableContextFactory pageableContextFactory,
+            ContextThreadAware<PageableContext> pageableContextFactory,
             ParameterProperties parameterProperties
     ) {
         return new ContextInitializeFilter(pageableContextFactory, parameterProperties);

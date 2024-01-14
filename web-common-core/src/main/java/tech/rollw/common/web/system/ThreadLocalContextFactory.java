@@ -14,34 +14,31 @@
  * limitations under the License.
  */
 
-package tech.rollw.common.web.system.defaults;
-
-import tech.rollw.common.web.system.ContextThread;
-import tech.rollw.common.web.system.ContextThreadAware;
-import tech.rollw.common.web.system.DefaultContextThread;
-import tech.rollw.common.web.system.paged.PageableContext;
+package tech.rollw.common.web.system;
 
 /**
+ * A thread local implementation of {@link ContextThreadAware}.
+ *
  * @author RollW
  */
-public class PageableContextFactory implements ContextThreadAware<PageableContext> {
-    private final ThreadLocal<ContextThread<PageableContext>> pageableContextThreadLocal = new ThreadLocal<>();
+public class ThreadLocalContextFactory<C extends SystemContext> implements ContextThreadAware<C> {
+    private final ThreadLocal<ContextThread<C>> contextThreadLocal = new ThreadLocal<>();
 
     @Override
-    public ContextThread<PageableContext> assambleContextThread(PageableContext context) {
-        ContextThread<PageableContext> contextThread = pageableContextThreadLocal.get();
+    public ContextThread<C> assambleContextThread(C context) {
+        ContextThread<C> contextThread = contextThreadLocal.get();
         if (contextThread == null) {
             contextThread = new DefaultContextThread<>(context);
-            pageableContextThreadLocal.set(contextThread);
+            contextThreadLocal.set(contextThread);
         }
         contextThread.setContext(context);
         return contextThread;
     }
 
     @Override
-    public ContextThread<PageableContext> getContextThread() {
-        ContextThread<PageableContext> thread =
-                pageableContextThreadLocal.get();
+    public ContextThread<C> getContextThread() {
+        ContextThread<C> thread =
+                contextThreadLocal.get();
         if (thread != null) {
             return thread;
         }
@@ -50,7 +47,7 @@ public class PageableContextFactory implements ContextThreadAware<PageableContex
 
     @Override
     public void clearContextThread() {
-        pageableContextThreadLocal.remove();
+        contextThreadLocal.remove();
     }
 
 }

@@ -22,7 +22,7 @@ import space.lingu.NonNull;
 import tech.rollw.common.web.ParameterFailedException;
 import tech.rollw.common.web.autoconfigure.ParameterProperties;
 import tech.rollw.common.web.system.ContextThread;
-import tech.rollw.common.web.system.defaults.PageableContextFactory;
+import tech.rollw.common.web.system.ContextThreadAware;
 import tech.rollw.common.web.system.paged.PageableContext;
 
 import javax.servlet.FilterChain;
@@ -36,10 +36,10 @@ import java.io.IOException;
  */
 @Order(-10)
 public class ContextInitializeFilter extends OncePerRequestFilter {
-    private final PageableContextFactory pageableContextFactory;
+    private final ContextThreadAware<PageableContext> pageableContextFactory;
     private final ParameterProperties parameterProperties;
 
-    public ContextInitializeFilter(PageableContextFactory pageableContextFactory,
+    public ContextInitializeFilter(ContextThreadAware<PageableContext> pageableContextFactory,
                                    ParameterProperties parameterProperties) {
         this.pageableContextFactory = pageableContextFactory;
         this.parameterProperties = parameterProperties;
