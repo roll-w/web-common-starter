@@ -1,6 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  tech.rollw.common.web.autoconfigure.SystemResourceAutoConfiguration,\
-  tech.rollw.common.web.autoconfigure.ErrorCodeConfiguration,\
-  tech.rollw.common.web.autoconfigure.SystemContextConfiguration,\
-  tech.rollw.common.web.autoconfigure.ValidatorConfiguration,\
-  tech.rollw.common.web.autoconfigure.RequestPageableEnhance
