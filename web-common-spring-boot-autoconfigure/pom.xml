@@ -22,7 +22,7 @@
     <parent>
         <groupId>tech.rollw.common</groupId>
         <artifactId>web-common-parent</artifactId>
-        <version>0.1.0</version>
+        <version>0.2.0</version>
         <relativePath>../web-common-parent/pom.xml</relativePath>
     </parent>
 
@@ -58,8 +58,8 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>

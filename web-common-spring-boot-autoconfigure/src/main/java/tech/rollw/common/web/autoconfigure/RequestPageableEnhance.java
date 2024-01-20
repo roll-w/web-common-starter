@@ -24,7 +24,7 @@ import tech.rollw.common.web.system.ContextThread;
 import tech.rollw.common.web.system.ContextThreadAware;
 import tech.rollw.common.web.system.paged.PageableContext;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author RollW

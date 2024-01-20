@@ -4,11 +4,9 @@ A utility library for web development in Spring Boot.
 
 ## Requirements
 
-- Java version 17 or higher
+- Java 17 or higher
 
-Built with Spring Boot 2.7.14.
-As for SpringBoot 3.x, it has API updates that are not compatible with 2.x. 
-Like the `javax.servlet` to `jakarta.servlet`, so it is not supported yet.
+Built with Spring Boot 3.
 
 ## Usage
 
@@ -20,7 +18,7 @@ Add the dependency to your project:
 <dependency>
     <groupId>tech.rollw.common</groupId>
     <artifactId>web-common-spring-boot-starter</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
