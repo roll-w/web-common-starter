@@ -18,16 +18,11 @@ Add the dependency to your project:
 <dependency>
     <groupId>tech.rollw.common</groupId>
     <artifactId>web-common-spring-boot-starter</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1</version>
 </dependency>
 ```
 
 ## How to use
-
-You can check out my other projects for examples.
-
-- [Lamp Blog System](https://github.com/Roll-W/lamp-blog)
-- [Cloud Disk](https://github.com/Roll-W/cloudhub-disk)
 
 This library provides some common interfaces and implementations for web development:
 
