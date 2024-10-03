@@ -46,7 +46,7 @@ public class DefaultErrorCodeMessageProvider implements ErrorCodeMessageProvider
             }
             return messageSource.getMessage(key, args, locale);
         } catch (NoSuchMessageException e) {
-            return null;
+            return errorCode.toString();
         }
     }
 
