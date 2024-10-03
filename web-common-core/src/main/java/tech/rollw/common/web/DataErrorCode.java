@@ -70,7 +70,7 @@ public enum DataErrorCode implements ErrorCode, ErrorCodeFinder, ErrorCodeMessag
 
     @Override
     public ErrorCode fromThrowable(Throwable e, ErrorCode defaultErrorCode) {
-        if (e instanceof BusinessRuntimeException sys) {
+        if (e instanceof CommonRuntimeException sys) {
             return sys.getErrorCode();
         }
         return null;

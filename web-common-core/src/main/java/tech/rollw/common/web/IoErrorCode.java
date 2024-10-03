@@ -81,7 +81,7 @@ public enum IoErrorCode implements ErrorCode, ErrorCodeFinder, ErrorCodeMessageP
 
     @Override
     public ErrorCode fromThrowable(Throwable e, ErrorCode defaultErrorCode) {
-        if (e instanceof BusinessRuntimeException sys) {
+        if (e instanceof CommonRuntimeException sys) {
             return sys.getErrorCode();
         }
         if (e instanceof FileNotFoundException) {

@@ -88,7 +88,7 @@ public enum CommonErrorCode implements ErrorCode, ErrorCodeFinder, ErrorCodeMess
 
     @Override
     public ErrorCode fromThrowable(Throwable e, ErrorCode defaultErrorCode) {
-        if (e instanceof BusinessRuntimeException sys) {
+        if (e instanceof CommonRuntimeException sys) {
             return sys.getErrorCode();
         }
 

@@ -17,7 +17,7 @@
 package tech.rollw.common.web.system;
 
 import space.lingu.NonNull;
-import tech.rollw.common.web.BusinessRuntimeException;
+import tech.rollw.common.web.CommonRuntimeException;
 
 /**
  * @author RollW
@@ -26,9 +26,9 @@ public interface SystemResourceFactory<ID> {
     @NonNull
     SystemResource<ID> getSystemResource(@NonNull ID resourceId,
                                          @NonNull SystemResourceKind systemResourceKind)
-            throws BusinessRuntimeException, UnsupportedKindException;
+            throws CommonRuntimeException, UnsupportedKindException;
 
     @NonNull
     SystemResource<ID> getSystemResource(@NonNull SystemResource<ID> systemResource)
-            throws BusinessRuntimeException, UnsupportedKindException;
+            throws CommonRuntimeException, UnsupportedKindException;
 }

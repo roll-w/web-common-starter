@@ -17,8 +17,12 @@
 package tech.rollw.common.web.system.defaults;
 
 import space.lingu.NonNull;
-import tech.rollw.common.web.BusinessRuntimeException;
-import tech.rollw.common.web.system.*;
+import tech.rollw.common.web.CommonRuntimeException;
+import tech.rollw.common.web.system.SystemResource;
+import tech.rollw.common.web.system.SystemResourceFactory;
+import tech.rollw.common.web.system.SystemResourceKind;
+import tech.rollw.common.web.system.SystemResourceProvider;
+import tech.rollw.common.web.system.UnsupportedKindException;
 
 import java.util.List;
 
@@ -36,7 +40,7 @@ public class DefaultSystemResourceFactory<ID> implements SystemResourceFactory<I
     @Override
     public SystemResource<ID> getSystemResource(@NonNull ID resourceId,
                                                 @NonNull SystemResourceKind systemResourceKind)
-            throws BusinessRuntimeException, UnsupportedKindException {
+            throws CommonRuntimeException, UnsupportedKindException {
         SystemResourceProvider<ID> systemResourceProvider = findFirstProvider(systemResourceKind);
         return systemResourceProvider.provide(resourceId, systemResourceKind);
     }

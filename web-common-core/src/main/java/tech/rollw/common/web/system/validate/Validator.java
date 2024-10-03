@@ -17,7 +17,7 @@
 package tech.rollw.common.web.system.validate;
 
 import space.lingu.NonNull;
-import tech.rollw.common.web.BusinessRuntimeException;
+import tech.rollw.common.web.CommonRuntimeException;
 import tech.rollw.common.web.ErrorCode;
 import tech.rollw.common.web.system.SystemResourceSupportable;
 
@@ -26,10 +26,10 @@ import tech.rollw.common.web.system.SystemResourceSupportable;
  */
 public interface Validator extends SystemResourceSupportable {
     default void validateThrows(Object value, @NonNull FieldType fieldType)
-            throws BusinessRuntimeException {
+            throws CommonRuntimeException {
         ErrorCode errorCode = validate(value, fieldType);
         if (errorCode.failed()) {
-            throw new BusinessRuntimeException(errorCode);
+            throw new CommonRuntimeException(errorCode);
         }
     }
 

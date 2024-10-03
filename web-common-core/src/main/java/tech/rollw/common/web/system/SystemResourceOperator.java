@@ -18,7 +18,7 @@ package tech.rollw.common.web.system;
 
 import space.lingu.NonNull;
 import tech.rollw.common.Castable;
-import tech.rollw.common.web.BusinessRuntimeException;
+import tech.rollw.common.web.CommonRuntimeException;
 
 /**
  * Defines common operations for system resources.
@@ -35,7 +35,7 @@ public interface SystemResourceOperator<ID> extends SystemResource<ID>,
      * @throws UnsupportedOperationException if the system resource does not
      *                                       support update manually.
      */
-    default SystemResource<ID> update() throws BusinessRuntimeException, UnsupportedOperationException {
+    default SystemResource<ID> update() throws CommonRuntimeException, UnsupportedOperationException {
         throw new UnsupportedOperationException("The system resource operator "
                 + getSystemResource().getSystemResourceKind()
                 + " does not support update.");
@@ -45,14 +45,14 @@ public interface SystemResourceOperator<ID> extends SystemResource<ID>,
     /**
      * Delete the system resource.
      */
-    SystemResource<ID> delete() throws BusinessRuntimeException;
+    SystemResource<ID> delete() throws CommonRuntimeException;
 
     /**
      * Restore the system resource.
      *
      * @throws UnsupportedOperationException if the system resource does not support restore.
      */
-    default SystemResource<ID> restore() throws BusinessRuntimeException, UnsupportedOperationException {
+    default SystemResource<ID> restore() throws CommonRuntimeException, UnsupportedOperationException {
         throw new UnsupportedOperationException("The system resource operator "
                 + getSystemResource().getSystemResourceKind()
                 + " does not support restore.");
@@ -63,7 +63,7 @@ public interface SystemResourceOperator<ID> extends SystemResource<ID>,
      *
      * @throws UnsupportedOperationException if the system resource does not support rename.
      */
-    default SystemResource<ID> rename(String newName) throws BusinessRuntimeException,
+    default SystemResource<ID> rename(String newName) throws CommonRuntimeException,
             UnsupportedOperationException {
         throw new UnsupportedOperationException("The system resource operator "
                 + getSystemResource().getSystemResourceKind()

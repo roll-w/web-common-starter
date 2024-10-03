@@ -17,7 +17,7 @@
 package tech.rollw.common.web.system;
 
 import space.lingu.NonNull;
-import tech.rollw.common.web.BusinessRuntimeException;
+import tech.rollw.common.web.CommonRuntimeException;
 
 /**
  * @author RollW
@@ -37,7 +37,7 @@ public interface SystemResourceProvider<ID> extends SystemResourceSupportable {
     @NonNull
     default SystemResource<ID> provide(@NonNull ID resourceId,
                                        @NonNull SystemResourceKind systemResourceKind)
-            throws BusinessRuntimeException, UnsupportedKindException {
+            throws CommonRuntimeException, UnsupportedKindException {
         return provide(new SimpleSystemResource<>(resourceId, systemResourceKind));
     }
 
@@ -46,7 +46,7 @@ public interface SystemResourceProvider<ID> extends SystemResourceSupportable {
      */
     @NonNull
     SystemResource<ID> provide(@NonNull SystemResource<ID> rawSystemResource)
-            throws BusinessRuntimeException, UnsupportedKindException;
+            throws CommonRuntimeException, UnsupportedKindException;
 
 
 }
