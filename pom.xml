@@ -25,9 +25,9 @@
     <version>0.2.1</version>
     <packaging>pom</packaging>
     <modules>
-        <module>../web-common-core</module>
-        <module>../web-common-spring-boot-autoconfigure</module>
-        <module>../web-common-spring-boot-starter</module>
+        <module>web-common-core</module>
+        <module>web-common-spring-boot-autoconfigure</module>
+        <module>web-common-spring-boot-starter</module>
     </modules>
 
     <properties>
@@ -39,7 +39,6 @@
         <spring-boot.version>3.3.4</spring-boot.version>
         <spring.version>6.1.13</spring.version>
         <servlet-api.version>6.0.0</servlet-api.version>
-
         <fiesta.version>0.2.1</fiesta.version>
 
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
