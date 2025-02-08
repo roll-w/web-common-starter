@@ -16,25 +16,21 @@
 
 package tech.rollw.common.web.autoconfigure;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import tech.rollw.common.web.ErrorCodeMessageProvider;
 import tech.rollw.common.web.system.defaults.DefaultErrorCodeMessageProvider;
 
 /**
  * @author RollW
  */
-@Configuration
-@ConditionalOnClass({ErrorCodeMessageProvider.class})
+@AutoConfiguration
 public class ErrorCodeConfiguration {
-
     @Bean
     @ConditionalOnMissingBean(ErrorCodeMessageProvider.class)
     public ErrorCodeMessageProvider defaultErrorCodeMessageProvider(MessageSource messageSource) {
         return new DefaultErrorCodeMessageProvider(messageSource);
     }
-
 }

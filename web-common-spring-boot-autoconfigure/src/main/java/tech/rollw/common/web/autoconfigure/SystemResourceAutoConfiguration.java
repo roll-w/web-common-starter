@@ -36,7 +36,7 @@ import java.util.List;
  * Import beans in your code like:
  * <pre>{@code
  *    @Autowired
- *    SystemResourceAuthenticationProviderFactory&lt;String&gt; systemResourceAuthenticationProviderFactory;
+ *    SystemResourceAuthenticationProviderFactory<String> systemResourceAuthenticationProviderFactory;
  * }</pre>
  *
  * @author RollW

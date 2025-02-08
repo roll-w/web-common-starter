@@ -16,9 +16,9 @@
 
 package tech.rollw.common.web.autoconfigure;
 
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import tech.rollw.common.web.system.defaults.DefaultSystemValidatorProvider;
 import tech.rollw.common.web.system.validate.Validator;
 import tech.rollw.common.web.system.validate.ValidatorProvider;
@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author RollW
  */
-@Configuration
+@AutoConfiguration
 public class ValidatorConfiguration {
 
     @Bean

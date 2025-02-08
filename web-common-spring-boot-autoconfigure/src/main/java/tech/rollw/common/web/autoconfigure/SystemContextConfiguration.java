@@ -16,11 +16,11 @@
 
 package tech.rollw.common.web.autoconfigure;
 
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import tech.rollw.common.web.components.ContextInitializeFilter;
 import tech.rollw.common.web.system.ContextThreadAware;
 import tech.rollw.common.web.system.ThreadLocalContextFactory;
@@ -29,7 +29,7 @@ import tech.rollw.common.web.system.paged.PageableContext;
 /**
  * @author RollW
  */
-@Configuration
+@AutoConfiguration
 @EnableConfigurationProperties({WebCommonProperties.class, ParameterProperties.class})
 public class SystemContextConfiguration {
 
