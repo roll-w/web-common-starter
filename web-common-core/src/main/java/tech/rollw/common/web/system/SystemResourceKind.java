@@ -26,11 +26,25 @@ import java.util.List;
  *
  * @author RollW
  */
+@FunctionalInterface
 public interface SystemResourceKind {
+    /**
+     * Get the name of this system resource kind.
+     *
+     * @return the name of this system resource kind
+     */
     String getName();
 
-    List<String> getAliases();
+    /**
+     * Get the aliases of this kind (may not include the name of this resource kind).
+     *
+     * @return the aliases of this kind
+     */
+    default List<String> getAliases() {
+        return List.of();
+    }
 
+    @FunctionalInterface
     interface Kind {
         SystemResourceKind getSystemResourceKind();
     }

@@ -24,6 +24,9 @@ import tech.rollw.common.web.system.*;
 import java.util.List;
 
 /**
+ * Default implementation of {@link SystemResourceAuthenticationProviderFactory}.
+ *
+ * @param <ID> the type of the resource id.
  * @author RollW
  */
 public class DefaultSystemResourceAuthenticationProviderFactory<ID>
