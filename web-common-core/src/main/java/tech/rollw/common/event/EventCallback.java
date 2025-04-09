@@ -19,6 +19,12 @@ package tech.rollw.common.event;
 /**
  * @author RollW
  */
+@FunctionalInterface
 public interface EventCallback<R> {
+    /**
+     * Invoked when an event is received.
+     *
+     * @param event the event
+     */
     void onEvent(R event);
 }

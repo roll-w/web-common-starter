@@ -20,5 +20,24 @@ package tech.rollw.common.event;
  * @author RollW
  */
 public interface EventRegistry<R, M> {
-    void register(EventCallback<R> eventCallback, M messagePattern);
+    /**
+     * Register an event callback with a message pattern.
+     * <p>
+     * When an event is published, the event registry will call the event callback
+     * if the message pattern matches the event.
+     *
+     * @param eventCallback  the event callback
+     * @param messagePattern the message pattern, used to filter events
+     * @return a unique event callback ID (can be used to unregister the event callback),
+     * or the same if the event callback is already registered.
+     */
+    String register(EventCallback<R> eventCallback,
+                    M messagePattern);
+
+    /**
+     * Unregister an event callback by its event ID.
+     *
+     * @param eventId the event ID
+     */
+    void unregister(String eventId);
 }
