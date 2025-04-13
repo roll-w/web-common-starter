@@ -20,7 +20,7 @@ package tech.rollw.common.web;
 /**
  * @author RollW
  */
-public class ParameterFailedException extends BusinessRuntimeException {
+public class ParameterFailedException extends CommonRuntimeException {
     public ParameterFailedException() {
         super(WebCommonErrorCode.ERROR_PARAM_FAILED);
     }

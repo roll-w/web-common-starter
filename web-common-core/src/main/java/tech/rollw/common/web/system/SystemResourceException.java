@@ -17,13 +17,13 @@
 package tech.rollw.common.web.system;
 
 
-import tech.rollw.common.web.BusinessRuntimeException;
+import tech.rollw.common.web.CommonRuntimeException;
 import tech.rollw.common.web.ErrorCode;
 
 /**
  * @author RollW
  */
-public class SystemResourceException extends BusinessRuntimeException {
+public class SystemResourceException extends CommonRuntimeException {
     public SystemResourceException(ErrorCode errorCode) {
         super(errorCode);
     }
