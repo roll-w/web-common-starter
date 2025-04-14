@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 RollW
+ * Copyright (C) 2023-2025 RollW
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package tech.rollw.common.web.system;
 
+import space.lingu.NonNull;
+
 import java.util.List;
 
 /**
@@ -27,26 +29,28 @@ public class SimpleSystemResourceKind implements SystemResourceKind {
     private final String name;
     private final List<String> aliases;
 
-    public SimpleSystemResourceKind(String name) {
+    public SimpleSystemResourceKind(@NonNull String name) {
         this.name = name;
         this.aliases = List.of();
     }
 
-    public SimpleSystemResourceKind(String name, String... aliases) {
+    public SimpleSystemResourceKind(@NonNull String name, @NonNull String... aliases) {
         this.name = name;
         this.aliases = List.of(aliases);
     }
 
-    public SimpleSystemResourceKind(String name, List<String> aliases) {
+    public SimpleSystemResourceKind(@NonNull String name, @NonNull List<String> aliases) {
         this.name = name;
         this.aliases = aliases;
     }
 
+    @NonNull
     @Override
     public String getName() {
         return name;
     }
 
+    @NonNull
     @Override
     public List<String> getAliases() {
         return aliases;
