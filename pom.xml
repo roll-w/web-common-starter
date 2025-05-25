@@ -22,7 +22,7 @@
 
     <groupId>tech.rollw.common</groupId>
     <artifactId>web-common-parent</artifactId>
-    <version>0.2.1</version>
+    <version>0.3.0</version>
     <packaging>pom</packaging>
     <modules>
         <module>web-common-core</module>

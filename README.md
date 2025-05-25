@@ -1,6 +1,7 @@
 # Web Common Starter
 
-A utility library for web development in Spring Boot.
+Web Common library provides a set of common interfaces and implementations for 
+web development under the Spring Boot framework. 
 
 ## Requirements
 
@@ -18,7 +19,7 @@ Add the dependency to your project:
 <dependency>
     <groupId>tech.rollw.common</groupId>
     <artifactId>web-common-spring-boot-starter</artifactId>
-    <version>0.2.1</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 
