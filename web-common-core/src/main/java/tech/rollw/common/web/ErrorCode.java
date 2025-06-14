@@ -55,6 +55,12 @@ public interface ErrorCode extends Serializable {
         return !success();
     }
 
+    /**
+     * Get the HTTP status code associated with this error code.
+     * Can be overridden by the {@link StatusCodeProvider}.
+     *
+     * @return the HTTP status code
+     */
     int getStatus();
 
     String toString();

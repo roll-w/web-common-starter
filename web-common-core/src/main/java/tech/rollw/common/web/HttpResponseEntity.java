@@ -16,7 +16,7 @@
 
 package tech.rollw.common.web;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import tech.rollw.common.web.page.Page;
@@ -30,60 +30,59 @@ import java.util.List;
  * @author RollW
  */
 public class HttpResponseEntity<D> extends ResponseEntity<HttpResponseBody<D>> {
-    public HttpResponseEntity(HttpStatus status) {
-        super(status);
-    }
-
-    public HttpResponseEntity(int status) {
-        super(HttpStatus.valueOf(status));
-    }
 
     public HttpResponseEntity(HttpResponseBody<D> body) {
-        super(body, null, body.getStatus());
+        this(body, null);
     }
 
     public HttpResponseEntity(HttpResponseBody<D> body,
                               MultiValueMap<String, String> headers) {
-        super(body, headers, body.getStatus());
+        this(body, HttpStatusCode.valueOf(body.getStatus().getErrorCode().getStatus()), headers);
+    }
+
+    public HttpResponseEntity(HttpResponseBody<D> body,
+                              HttpStatusCode httpStatus,
+                              MultiValueMap<String, String> headers) {
+        super(body, headers, httpStatus);
     }
 
     public HttpResponseEntity<D> fork() {
-        return new HttpResponseEntity<>(getBody(), getHeaders());
+        return new HttpResponseEntity<>(getBody(), getStatusCode(), getHeaders());
     }
 
     public HttpResponseEntity<D> fork(HttpResponseBody<D> newResponseBody) {
-        return new HttpResponseEntity<>(newResponseBody, getHeaders());
+        return new HttpResponseEntity<>(newResponseBody, getStatusCode(), getHeaders());
+    }
+
+    public static <D> Builder<D> builder() {
+        return new Builder<>();
     }
 
     public static class Builder<D> {
-        private Integer status;
-        private String message;
-        private ErrorCode errorCode;
-        private String tip;
+        private HttpStatusCode httpStatus;
+        private MultiValueMap<String, String> headers;
+        private Status status;
         private D data;
 
-        public Builder<D> status(HttpStatus status) {
-            this.status = status.value();
-            return this;
+        public Builder() {
+            this.headers = null;
+            this.status = null;
+            this.data = null;
+            this.httpStatus = null;
         }
 
-        public Builder<D> status(int status) {
+        public Builder<D> status(Status status) {
             this.status = status;
             return this;
         }
 
-        public Builder<D> message(String message) {
-            this.message = message;
+        public Builder<D> httpStatus(int httpStatus) {
+            this.httpStatus = HttpStatusCode.valueOf(httpStatus);
             return this;
         }
 
-        public Builder<D> errorCode(ErrorCode errorCode) {
-            this.errorCode = errorCode;
-            return this;
-        }
-
-        public Builder<D> tip(String tip) {
-            this.tip = tip;
+        public Builder<D> httpStatus(HttpStatusCode httpStatus) {
+            this.httpStatus = httpStatus;
             return this;
         }
 
@@ -92,78 +91,63 @@ public class HttpResponseEntity<D> extends ResponseEntity<HttpResponseBody<D>> {
             return this;
         }
 
+        public Builder<D> headers(MultiValueMap<String, String> headers) {
+            this.headers = headers;
+            return this;
+        }
+
         public HttpResponseEntity<D> build() {
+            if (status == null) {
+                status = Status.SUCCESS;
+            }
+            if (httpStatus == null) {
+                httpStatus = HttpStatusCode.valueOf(status.getErrorCode().getStatus());
+            }
             return new HttpResponseEntity<>(
-                    HttpResponseBody.of(errorCode, status, message, tip, data)
+                    HttpResponseBody.<D>builder()
+                            .status(status)
+                            .data(data)
+                            .build(),
+                    httpStatus,
+                    headers
             );
         }
+    }
+
+    public static <D> HttpResponseEntity<D> success() {
+        return of(HttpResponseBody.success());
+    }
+
+    public static <D> HttpResponseEntity<D> success(D data) {
+        return of(HttpResponseBody.success(data));
+    }
+
+    public static <D> HttpResponseEntity<D> success(String message, D data) {
+        return of(HttpResponseBody.success(message, data));
+    }
+
+    public static <D> HttpResponseEntity<List<D>> success(Page<D> page) {
+        return of(PageableHttpResponseBody.success(page));
+    }
+
+    public static <D> HttpResponseEntity<D> of(ErrorCode errorCode,
+                                               String message) {
+        return of(HttpResponseBody.of(errorCode, message));
+    }
+
+    public static <D> HttpResponseEntity<D> of(ErrorCode errorCode) {
+        return of(HttpResponseBody.of(errorCode));
     }
 
     public static <D> HttpResponseEntity<D> of(HttpResponseBody<D> body) {
         return new HttpResponseEntity<>(body);
     }
 
-    public static <D> HttpResponseEntity<D> of(HttpResponseBody<D> body,
-                                               Page<D> page) {
-        return new HttpResponseEntity<>(body);
-    }
-
-    public static <D> HttpResponseEntity<D> success() {
-        return of(
-                HttpResponseBody.success()
-        );
-    }
-
-    public static <D> HttpResponseEntity<D> success(String message, D data) {
-        return of(
-                HttpResponseBody.success(message, data)
-        );
-    }
-
-    public static <D> HttpResponseEntity<D> success(D data) {
-        return of(
-                HttpResponseBody.success(data)
-        );
-    }
-
-    public static <D> HttpResponseEntity<List<D>> success(Page<D> page) {
-        return of(
-                PageableHttpResponseBody.success(page)
-        );
-    }
-
-
-    public static <D> HttpResponseEntity<D> of(ErrorCode errorCode,
-                                               String message) {
-        return of(
-                HttpResponseBody.of(errorCode, message)
-        );
-    }
-
-    public static <D> HttpResponseEntity<D> of(ErrorCode errorCode,
-                                               String message,
-                                               String tip) {
-        return of(
-                HttpResponseBody.<D>builder()
-                        .errorCode(errorCode)
-                        .message(message)
-                        .tip(tip)
-                        .build()
-        );
-    }
-
-
-    public static <D> HttpResponseEntity<D> of(ErrorCode errorCode) {
-        return of(
-                HttpResponseBody.of(errorCode)
-        );
-    }
-
     public static <D> HttpResponseEntity<D> of(ErrorCode errorCode,
                                                D data) {
         return of(
                 HttpResponseBody.builder(data)
-                        .errorCode(errorCode)
+                        .status(Status.from(errorCode))
                         .build()
         );
     }
