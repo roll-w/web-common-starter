@@ -29,4 +29,22 @@ public interface Operator {
      * @return the id of the operator
      */
     long getOperatorId();
+
+    default boolean equals(Operator other) {
+        if (other == null) {
+            return false;
+        }
+        return this.getOperatorId() == other.getOperatorId();
+    }
+
+    static boolean equals(Operator operator1, Operator operator2) {
+        if (operator1 == null || operator2 == null) {
+            return false;
+        }
+        return operator1.equals(operator2);
+    }
+
+    static Operator of(long operatorId) {
+        return new SimpleOperator(operatorId);
+    }
 }
