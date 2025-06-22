@@ -35,12 +35,12 @@ import java.io.IOException;
  * @author RollW
  */
 @Order(-10)
-public class ContextInitializeFilter extends OncePerRequestFilter {
+public class PageableContextInitializeFilter extends OncePerRequestFilter {
     private final ContextThreadAware<PageableContext> pageableContextFactory;
     private final ParameterProperties parameterProperties;
 
-    public ContextInitializeFilter(ContextThreadAware<PageableContext> pageableContextFactory,
-                                   ParameterProperties parameterProperties) {
+    public PageableContextInitializeFilter(ContextThreadAware<PageableContext> pageableContextFactory,
+                                           ParameterProperties parameterProperties) {
         this.pageableContextFactory = pageableContextFactory;
         this.parameterProperties = parameterProperties;
     }

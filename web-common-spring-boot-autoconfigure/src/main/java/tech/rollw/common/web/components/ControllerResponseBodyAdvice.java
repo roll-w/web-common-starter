@@ -1,0 +1,134 @@
+/*
+ * Copyright (C) 2023 RollW
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package tech.rollw.common.web.components;
+
+import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+import space.lingu.NonNull;
+import tech.rollw.common.web.ErrorCodeMessageProvider;
+import tech.rollw.common.web.HttpResponseBody;
+import tech.rollw.common.web.HttpResponseEntity;
+import tech.rollw.common.web.PageableHttpResponseBody;
+import tech.rollw.common.web.Status;
+import tech.rollw.common.web.StatusCodeProvider;
+import tech.rollw.common.web.page.Page;
+import tech.rollw.common.web.system.ContextThread;
+import tech.rollw.common.web.system.ContextThreadAware;
+import tech.rollw.common.web.system.paged.PageableContext;
+
+import java.util.Objects;
+
+/**
+ * @author RollW
+ */
+public class ControllerResponseBodyAdvice implements ResponseBodyAdvice<Object> {
+    private final ErrorCodeMessageProvider errorCodeMessageProvider;
+    private final MessageSource messageSource;
+    private final ContextThreadAware<PageableContext> contextThreadAware;
+    private final StatusCodeProvider statusCodeProvider;
+
+    public ControllerResponseBodyAdvice(ErrorCodeMessageProvider errorCodeMessageProvider,
+                                        MessageSource messageSource,
+                                        ContextThreadAware<PageableContext> contextThreadAware,
+                                        StatusCodeProvider statusCodeProvider) {
+        this.errorCodeMessageProvider = errorCodeMessageProvider;
+        this.messageSource = messageSource;
+        this.contextThreadAware = contextThreadAware;
+        this.statusCodeProvider = statusCodeProvider;
+    }
+
+    @Override
+    public boolean supports(@NonNull MethodParameter returnType,
+                            @NonNull Class<? extends HttpMessageConverter<?>> converterType) {
+        return checkIfJsonConverter(converterType);
+    }
+
+    protected boolean checkIfJsonConverter(Class<? extends HttpMessageConverter<?>> converterType) {
+        return converterType.equals(MappingJackson2HttpMessageConverter.class);
+    }
+
+    @Override
+    public Object beforeBodyWrite(
+            Object obj,
+            @NonNull MethodParameter returnType,
+            @NonNull MediaType selectedContentType,
+            @NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
+            @NonNull ServerHttpRequest request,
+            @NonNull ServerHttpResponse response) {
+        if (obj == null) {
+            return null;
+        }
+        if (obj instanceof HttpResponseEntity<?>) {
+            return obj;
+        }
+        if (!(obj instanceof HttpResponseBody<?> body)) {
+            return obj;
+        }
+        Object data = body.getData();
+        if (data instanceof Page<?> dataList &&
+                !(body instanceof PageableHttpResponseBody<?>)) {
+            ContextThread<PageableContext> contextThread =
+                    contextThreadAware.getContextThread();
+            if (contextThread.hasContext()) {
+                PageableContext pageableContext = contextThread.getContext();
+                @SuppressWarnings("unchecked")
+                Page<Object> objectPage = (Page<Object>) pageableContext.toPage(dataList);
+                body = new PageableHttpResponseBody<>(
+                        body.getStatus(),
+                        objectPage
+                );
+            }
+        }
+        HttpMethod method = request.getMethod();
+        String rawMessage = body.getStatus().getMessage();
+        String newMessage = tryGetMessage(body.getStatus());
+
+        int rawCode = body.getStatus().getErrorCode().getStatus();
+        int newCode = tryReplaceStatusCode(body, method);
+        if (Objects.equals(rawMessage, newMessage) && rawCode == newCode) {
+            return body;
+        }
+        response.setStatusCode(HttpStatusCode.valueOf(newCode));
+        return body.fork(body.getStatus().withMessage(newMessage));
+    }
+
+    private int tryReplaceStatusCode(HttpResponseBody<?> body, HttpMethod method) {
+        return statusCodeProvider.getStatusCode(body.getStatus(), method);
+    }
+
+    private String tryGetMessage(Status status) {
+        String message = status.getMessage();
+        if (message == null || message.isBlank()) {
+            return errorCodeMessageProvider.getMessage(status.getErrorCode());
+        }
+        try {
+            return messageSource.getMessage(message, null, LocaleContextHolder.getLocale());
+        } catch (NoSuchMessageException e) {
+            return message;
+        }
+    }
+}
