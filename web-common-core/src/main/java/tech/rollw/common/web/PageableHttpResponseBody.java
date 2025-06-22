@@ -23,7 +23,6 @@ import java.util.List;
 /**
  * @author RollW
  */
-@SuppressWarnings("unchecked")
 public final class PageableHttpResponseBody<D> extends HttpResponseBody<List<D>> {
     private int page;
     private int size;

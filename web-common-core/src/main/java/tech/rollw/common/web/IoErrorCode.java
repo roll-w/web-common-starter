@@ -51,7 +51,7 @@ public enum IoErrorCode implements ErrorCode, ErrorCodeFinder, ErrorCodeMessageP
     @Override
     public String toString() {
         if (this == SUCCESS) {
-            return "SUCCESS";
+            return "OK";
         }
 
         return "IoError: %s, code: %s".formatted(name(), getCode());

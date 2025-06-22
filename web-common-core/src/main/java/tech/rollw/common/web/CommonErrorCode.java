@@ -58,7 +58,7 @@ public enum CommonErrorCode implements ErrorCode, ErrorCodeFinder, ErrorCodeMess
     @Override
     public String toString() {
         if (this == SUCCESS) {
-            return "SUCCESS";
+            return "OK";
         }
 
         return "CommonError: %s, code: %s".formatted(name(), getCode());

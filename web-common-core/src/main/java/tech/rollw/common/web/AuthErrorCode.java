@@ -57,7 +57,7 @@ public enum AuthErrorCode implements ErrorCode, ErrorCodeFinder, ErrorCodeMessag
     @Override
     public String toString() {
         if (this == SUCCESS) {
-            return "SUCCESS";
+            return "OK";
         }
 
         return "AuthError: %s, code: %s".formatted(name(), getCode());

@@ -59,7 +59,7 @@ public enum UserErrorCode implements ErrorCode, ErrorCodeFinder, ErrorCodeMessag
     @Override
     public String toString() {
         if (this == SUCCESS) {
-            return "SUCCESS";
+            return "OK";
         }
 
         return "UserError: %s, code: %s".formatted(name(), getCode());
