@@ -38,7 +38,7 @@ public interface SystemResourceProvider<ID> extends SystemResourceSupportable {
     default SystemResource<ID> provide(@NonNull ID resourceId,
                                        @NonNull SystemResourceKind systemResourceKind)
             throws CommonRuntimeException, UnsupportedKindException {
-        return provide(new SimpleSystemResource<>(resourceId, systemResourceKind));
+        return provide(new SystemResourceLocator<>(resourceId, systemResourceKind));
     }
 
     /**

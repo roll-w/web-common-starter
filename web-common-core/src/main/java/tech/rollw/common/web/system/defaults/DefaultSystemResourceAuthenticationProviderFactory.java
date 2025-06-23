@@ -17,8 +17,18 @@
 package tech.rollw.common.web.system.defaults;
 
 import space.lingu.NonNull;
+import space.lingu.Nullable;
 import tech.rollw.common.web.AuthErrorCode;
-import tech.rollw.common.web.system.*;
+import tech.rollw.common.web.system.Action;
+import tech.rollw.common.web.system.Operator;
+import tech.rollw.common.web.system.SimpleSystemAuthentication;
+import tech.rollw.common.web.system.SystemAuthenticateCredentials;
+import tech.rollw.common.web.system.SystemAuthentication;
+import tech.rollw.common.web.system.SystemResource;
+import tech.rollw.common.web.system.SystemResourceAuthenticationProvider;
+import tech.rollw.common.web.system.SystemResourceAuthenticationProviderFactory;
+import tech.rollw.common.web.system.SystemResourceException;
+import tech.rollw.common.web.system.SystemResourceKind;
 
 
 import java.util.List;
@@ -79,10 +89,16 @@ public class DefaultSystemResourceAuthenticationProviderFactory<ID>
 
         @NonNull
         @Override
-        public SystemAuthentication<ID> authenticate(SystemResource<ID> systemResource,
-                                                     Operator operator, Action action,
-                                                     SystemAuthenticateCredentials credentials) {
-            return new SimpleSystemAuthentication<>(systemResource, operator, credentials, true);
+        public SystemAuthentication<ID> authenticate(@NonNull SystemResource<ID> systemResource,
+                                                     @Nullable Operator operator,
+                                                     @NonNull Action action,
+                                                     @NonNull SystemAuthenticateCredentials credentials) {
+            if (action.accepts(systemResource.getSystemResourceKind())) {
+                return new SimpleSystemAuthentication<>(systemResource, operator, credentials, false);
+            }
+            throw new SystemResourceException(AuthErrorCode.ERROR_NO_HANDLER,
+                    "No matched authentication provider found for action: " + action +
+                            " on resource kind: " + systemResource.getSystemResourceKind());
         }
 
         static final DefaultProvider<Object> INSTANCE = new DefaultProvider<>();

@@ -20,7 +20,13 @@ import space.lingu.NonNull;
 import tech.rollw.common.Castable;
 
 /**
- * Define the system resource.
+ * Define the system resource. Could use to indentify the location of a system resource.
+ * Implementations MAY have detailed information about the system resource, such as its
+ * name, description, etc.
+ * <p>
+ * When use as the location of a system resource, the implementation MUST ignore the
+ * detailed information and only use the  {@link SystemResourceKind systen resource kind}
+ * and the {@link #getResourceId() resource id} to retrieve the system resource.
  *
  * @param <ID> the type of the system resource id
  * @author RollW
@@ -35,4 +41,8 @@ public interface SystemResource<ID> extends SystemResourceKind.Kind, Castable {
     @Override
     @NonNull
     SystemResourceKind getSystemResourceKind();
+
+    static <ID> SystemResource<ID> of(ID resourceId, SystemResourceKind kind) {
+        return new SystemResourceLocator<>(resourceId, kind);
+    }
 }

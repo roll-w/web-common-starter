@@ -16,24 +16,30 @@
 
 package tech.rollw.common.web.system;
 
+import space.lingu.NonNull;
+
 /**
  * System resource operator provider.
  *
  * @author RollW
  */
 public interface SystemResourceOperatorProvider<ID> {
+    @NonNull
     <T extends SystemResourceOperator<ID>> T
-    getSystemResourceOperator(SystemResource<ID> systemResource);
+    getSystemResourceOperator(@NonNull SystemResource<ID> systemResource);
 
+    @NonNull
     <T extends SystemResourceOperator<ID>> T
-    getSystemResourceOperator(SystemResource<ID> systemResource, boolean checkDelete);
+    getSystemResourceOperator(@NonNull SystemResource<ID> systemResource, boolean checkDelete);
 
+    @NonNull
     <T extends SystemResourceOperator<ID>> T
-    getSystemResourceOperator(SystemResource<ID> systemResource,
-                              SystemResourceKind targetSystemResourceKind,
+    getSystemResourceOperator(@NonNull SystemResource<ID> systemResource,
+                              @NonNull SystemResourceKind targetSystemResourceKind,
                               boolean checkDelete);
 
+    @NonNull
     <T extends SystemResourceOperator<ID>> T
-    getSystemResourceOperator(SystemResource<ID> systemResource,
-                              SystemResourceKind targetSystemResourceKind);
+    getSystemResourceOperator(@NonNull SystemResource<ID> systemResource,
+                              @NonNull SystemResourceKind targetSystemResourceKind);
 }

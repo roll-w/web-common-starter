@@ -19,9 +19,11 @@ package tech.rollw.common.web.system;
 import space.lingu.NonNull;
 
 /**
+ * A simple implementation of {@link SystemResource} that locates a system resource by its ID and kind.
+ *
  * @author RollW
  */
-public record SimpleSystemResource<ID>(
+public record SystemResourceLocator<ID>(
         ID resourceId,
         SystemResourceKind systemResourceKind
 ) implements SystemResource<ID> {

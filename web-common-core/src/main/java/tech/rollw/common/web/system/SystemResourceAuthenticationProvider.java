@@ -17,6 +17,7 @@
 package tech.rollw.common.web.system;
 
 import space.lingu.NonNull;
+import space.lingu.Nullable;
 
 import java.util.List;
 
@@ -28,14 +29,15 @@ public interface SystemResourceAuthenticationProvider<ID> extends SystemResource
     boolean supports(@NonNull SystemResourceKind systemResourceKind);
 
     @NonNull
-    SystemAuthentication<ID> authenticate(SystemResource<ID> systemResource,
-                                          Operator operator, Action action,
-                                          SystemAuthenticateCredentials credentials);
+    SystemAuthentication<ID> authenticate(@NonNull SystemResource<ID> systemResource,
+                                          @Nullable Operator operator, @NonNull Action action,
+                                          @NonNull SystemAuthenticateCredentials credentials);
 
     @NonNull
-    default List<SystemAuthentication<ID>> authenticate(
-            @NonNull List<? extends SystemResource<ID>> systemResources,
-            Operator operator, Action action, SystemAuthenticateCredentials credentials) {
+    default List<SystemAuthentication<ID>> authenticate(@NonNull List<? extends SystemResource<ID>> systemResources,
+                                                        @Nullable Operator operator,
+                                                        @NonNull Action action,
+                                                        @NonNull SystemAuthenticateCredentials credentials) {
         return systemResources.stream()
                 .map(systemResource -> authenticate(systemResource, operator, action, credentials))
                 .toList();

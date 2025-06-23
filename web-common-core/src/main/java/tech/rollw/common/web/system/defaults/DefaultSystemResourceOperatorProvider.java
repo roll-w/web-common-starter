@@ -16,7 +16,12 @@
 
 package tech.rollw.common.web.system.defaults;
 
-import tech.rollw.common.web.system.*;
+import space.lingu.NonNull;
+import tech.rollw.common.web.system.SystemResource;
+import tech.rollw.common.web.system.SystemResourceKind;
+import tech.rollw.common.web.system.SystemResourceOperator;
+import tech.rollw.common.web.system.SystemResourceOperatorFactory;
+import tech.rollw.common.web.system.SystemResourceOperatorProvider;
 
 import java.util.List;
 
@@ -31,15 +36,17 @@ public class DefaultSystemResourceOperatorProvider<ID> implements SystemResource
         this.systemResourceOperatorFactories = systemResourceOperatorFactories;
     }
 
+    @NonNull
     @Override
     public <T extends SystemResourceOperator<ID>> T getSystemResourceOperator(
-            SystemResource<ID> systemResource) {
+            @NonNull SystemResource<ID> systemResource) {
         return getSystemResourceOperator(systemResource, true);
     }
 
+    @NonNull
     @Override
     public <T extends SystemResourceOperator<ID>> T getSystemResourceOperator(
-            SystemResource<ID> systemResource, boolean checkDelete) {
+            @NonNull SystemResource<ID> systemResource, boolean checkDelete) {
         SystemResourceOperatorFactory<ID> systemResourceOperatorFactory =
                 findFirstOf(systemResource.getSystemResourceKind());
         SystemResourceOperator<ID> systemResourceOperator =
@@ -55,10 +62,11 @@ public class DefaultSystemResourceOperatorProvider<ID> implements SystemResource
         }
     }
 
+    @NonNull
     @Override
     public <T extends SystemResourceOperator<ID>> T getSystemResourceOperator(
-            SystemResource<ID> systemResource,
-            SystemResourceKind targetSystemResourceKind,
+            @NonNull SystemResource<ID> systemResource,
+            @NonNull SystemResourceKind targetSystemResourceKind,
             boolean checkDelete) {
         SystemResourceOperatorFactory<ID> systemResourceOperatorFactory = findFirstOf(
                 targetSystemResourceKind
@@ -79,10 +87,11 @@ public class DefaultSystemResourceOperatorProvider<ID> implements SystemResource
         }
     }
 
+    @NonNull
     @Override
     public <T extends SystemResourceOperator<ID>> T getSystemResourceOperator(
-            SystemResource<ID> systemResource,
-            SystemResourceKind targetSystemResourceKind) {
+            @NonNull SystemResource<ID> systemResource,
+            @NonNull SystemResourceKind targetSystemResourceKind) {
         return getSystemResourceOperator(
                 systemResource,
                 targetSystemResourceKind,
