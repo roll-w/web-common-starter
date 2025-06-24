@@ -27,6 +27,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import space.lingu.NonNull;
 import tech.rollw.common.web.ErrorCodeMessageProvider;
@@ -43,8 +44,13 @@ import tech.rollw.common.web.system.paged.PageableContext;
 import java.util.Objects;
 
 /**
+ * A controller advice that modifies the response body, replacing the status code
+ * and message with the ones provided by the {@link StatusCodeProvider} and
+ * {@link ErrorCodeMessageProvider}.
+ *
  * @author RollW
  */
+@ControllerAdvice
 public class ControllerResponseBodyAdvice implements ResponseBodyAdvice<Object> {
     private final ErrorCodeMessageProvider errorCodeMessageProvider;
     private final MessageSource messageSource;
@@ -89,8 +95,7 @@ public class ControllerResponseBodyAdvice implements ResponseBodyAdvice<Object> 
             return obj;
         }
         Object data = body.getData();
-        if (data instanceof Page<?> dataList &&
-                !(body instanceof PageableHttpResponseBody<?>)) {
+        if (data instanceof Page<?> dataList && !(body instanceof PageableHttpResponseBody<?>)) {
             ContextThread<PageableContext> contextThread =
                     contextThreadAware.getContextThread();
             if (contextThread.hasContext()) {

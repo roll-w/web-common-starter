@@ -20,13 +20,8 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
-import tech.rollw.common.web.ErrorCodeMessageProvider;
-import tech.rollw.common.web.MatchBestStatusCodeProvider;
-import tech.rollw.common.web.StatusCodeProvider;
 import tech.rollw.common.web.components.PageableContextInitializeFilter;
-import tech.rollw.common.web.components.ControllerResponseBodyAdvice;
 import tech.rollw.common.web.system.ContextThreadAware;
 import tech.rollw.common.web.system.ThreadLocalContextFactory;
 import tech.rollw.common.web.system.paged.PageableContext;
@@ -36,7 +31,7 @@ import tech.rollw.common.web.system.paged.PageableContext;
  */
 @AutoConfiguration
 @EnableConfigurationProperties({WebCommonProperties.class, ParameterProperties.class})
-public class SystemContextConfiguration {
+public class SystemContextAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(value = PageableContext.class, parameterizedContainer = ContextThreadAware.class)
@@ -53,20 +48,4 @@ public class SystemContextConfiguration {
         return new PageableContextInitializeFilter(pageableContextFactory, parameterProperties);
     }
 
-    @Bean
-    @ConditionalOnProperty(prefix = "web-common", name = "controller-response-advise", havingValue = "true")
-    public ControllerResponseBodyAdvice controllerResponseBodyAdvice(
-            ErrorCodeMessageProvider errorCodeMessageProvider,
-            MessageSource messageSource,
-            ContextThreadAware<PageableContext> pageableContextFactory,
-            StatusCodeProvider statusCodeProvider
-    ) {
-        return new ControllerResponseBodyAdvice(errorCodeMessageProvider, messageSource, pageableContextFactory, statusCodeProvider);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(StatusCodeProvider.class)
-    public StatusCodeProvider statusCodeProvider() {
-        return new MatchBestStatusCodeProvider();
-    }
 }
