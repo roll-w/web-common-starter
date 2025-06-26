@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 RollW
+ * Copyright (C) 2023-2025 RollW
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package tech.rollw.common.web.system.defaults;
+package tech.rollw.common.web;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
-import tech.rollw.common.web.ErrorCode;
-import tech.rollw.common.web.ErrorCodeMessageProvider;
 import tech.rollw.common.web.util.ErrorCodeKeyHelper;
 
 import java.util.Locale;
@@ -27,10 +25,10 @@ import java.util.Locale;
 /**
  * @author RollW
  */
-public class DefaultErrorCodeMessageProvider implements ErrorCodeMessageProvider {
+public class MessageSourceBasedErrorCodeMessageProvider implements ErrorCodeMessageProvider {
     private final MessageSource messageSource;
 
-    public DefaultErrorCodeMessageProvider(MessageSource messageSource) {
+    public MessageSourceBasedErrorCodeMessageProvider(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 

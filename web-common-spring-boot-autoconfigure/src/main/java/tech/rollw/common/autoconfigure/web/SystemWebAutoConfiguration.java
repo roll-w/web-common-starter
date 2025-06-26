@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tech.rollw.common.web.autoconfigure;
+package tech.rollw.common.autoconfigure.web;
 
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

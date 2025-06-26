@@ -31,6 +31,10 @@ import java.util.List;
  */
 public class HttpResponseEntity<D> extends ResponseEntity<HttpResponseBody<D>> {
 
+    public HttpResponseEntity(HttpStatusCode httpStatus) {
+        this(null, httpStatus, null);
+    }
+
     public HttpResponseEntity(HttpResponseBody<D> body) {
         this(body, null);
     }

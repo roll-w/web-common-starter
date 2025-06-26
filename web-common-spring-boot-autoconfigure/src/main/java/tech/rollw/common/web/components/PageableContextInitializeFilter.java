@@ -20,7 +20,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.OncePerRequestFilter;
 import space.lingu.NonNull;
 import tech.rollw.common.web.ParameterFailedException;
-import tech.rollw.common.web.autoconfigure.ParameterProperties;
+import tech.rollw.common.autoconfigure.web.ParameterProperties;
 import tech.rollw.common.web.system.ContextThread;
 import tech.rollw.common.web.system.ContextThreadAware;
 import tech.rollw.common.web.system.paged.PageableContext;

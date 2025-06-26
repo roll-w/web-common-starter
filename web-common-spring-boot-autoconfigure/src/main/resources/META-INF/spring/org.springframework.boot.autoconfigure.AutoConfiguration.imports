@@ -1,7 +1,7 @@
-tech.rollw.common.web.autoconfigure.SystemResourceAutoConfiguration
-tech.rollw.common.web.autoconfigure.ErrorCodeConfiguration
-tech.rollw.common.web.autoconfigure.SystemContextAutoConfiguration
-tech.rollw.common.web.autoconfigure.SystemWebAutoConfiguration
-tech.rollw.common.web.autoconfigure.SystemWebAutoConfiguration$ControllerAdviceAutoConfiguration
-tech.rollw.common.web.autoconfigure.ValidatorConfiguration
-tech.rollw.common.web.autoconfigure.RequestPageableEnhance
+tech.rollw.common.autoconfigure.SystemResourceAutoConfiguration
+tech.rollw.common.autoconfigure.ErrorCodeConfiguration
+tech.rollw.common.autoconfigure.web.PageableContextAutoConfiguration
+tech.rollw.common.autoconfigure.web.SystemWebAutoConfiguration
+tech.rollw.common.autoconfigure.web.SystemWebAutoConfiguration$ControllerAdviceAutoConfiguration
+tech.rollw.common.autoconfigure.web.ValidatorConfiguration
+tech.rollw.common.autoconfigure.web.RequestPageableEnhance

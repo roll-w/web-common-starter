@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 RollW
+ * Copyright (C) 2023-2025 RollW
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package tech.rollw.common.web.autoconfigure;
+package tech.rollw.common.autoconfigure;
 
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import tech.rollw.common.web.ErrorCodeMessageProvider;
-import tech.rollw.common.web.system.defaults.DefaultErrorCodeMessageProvider;
+import tech.rollw.common.web.MessageSourceBasedErrorCodeMessageProvider;
 
 /**
  * @author RollW
@@ -31,6 +31,6 @@ public class ErrorCodeConfiguration {
     @Bean
     @ConditionalOnMissingBean(ErrorCodeMessageProvider.class)
     public ErrorCodeMessageProvider defaultErrorCodeMessageProvider(MessageSource messageSource) {
-        return new DefaultErrorCodeMessageProvider(messageSource);
+        return new MessageSourceBasedErrorCodeMessageProvider(messageSource);
     }
 }
