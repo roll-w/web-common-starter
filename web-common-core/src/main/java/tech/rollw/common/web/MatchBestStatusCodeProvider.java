@@ -22,7 +22,7 @@ import org.springframework.http.HttpMethod;
  * A status code provider that converts a given status to the best matching HTTP status code
  * based on the HTTP method used.
  * <p>
- * Only converts the status code if it is 200, otherwise returns the original status code.
+ * Only converts if the status code is 200, otherwise returns the original status code.
  *
  * @author RollW
  */

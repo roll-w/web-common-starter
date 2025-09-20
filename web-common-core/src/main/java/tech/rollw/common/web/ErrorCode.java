@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 RollW
+ * Copyright (C) 2023-2025 RollW
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,13 +56,23 @@ public interface ErrorCode extends Serializable {
     }
 
     /**
-     * Get the HTTP status code associated with this error code.
-     * Can be overridden by the {@link StatusCodeProvider}.
+     * Get the status code associated with this error code.
+     * Recommended to use standard HTTP status codes.
+     * <p>
+     * For custom status codes, can use the {@link StatusCodeProvider}
+     * interface to provide custom codes  mapping to standard HTTP status codes,
+     * or override the default status code.
      *
-     * @return the HTTP status code
+     * @return the status code
      */
     int getStatus();
 
     String toString();
+
+    default void throwIfFailed() throws CommonRuntimeException {
+        if (failed()) {
+            throw new CommonRuntimeException(this);
+        }
+    }
 }
 
