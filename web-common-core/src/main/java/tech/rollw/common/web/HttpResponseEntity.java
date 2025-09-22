@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 RollW
+ * Copyright (C) 2023-2025 RollW
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package tech.rollw.common.web;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
@@ -31,30 +33,32 @@ import java.util.List;
  */
 public class HttpResponseEntity<D> extends ResponseEntity<HttpResponseBody<D>> {
 
-    public HttpResponseEntity(HttpStatusCode httpStatus) {
+    public HttpResponseEntity(@NonNull HttpStatusCode httpStatus) {
         this(null, httpStatus, null);
     }
 
-    public HttpResponseEntity(HttpResponseBody<D> body) {
+    public HttpResponseEntity(@NonNull HttpResponseBody<D> body) {
         this(body, null);
     }
 
-    public HttpResponseEntity(HttpResponseBody<D> body,
-                              MultiValueMap<String, String> headers) {
+    public HttpResponseEntity(@NonNull HttpResponseBody<D> body,
+                              @Nullable MultiValueMap<String, String> headers) {
         this(body, HttpStatusCode.valueOf(body.getStatus().getErrorCode().getStatus()), headers);
     }
 
-    public HttpResponseEntity(HttpResponseBody<D> body,
-                              HttpStatusCode httpStatus,
-                              MultiValueMap<String, String> headers) {
+    public HttpResponseEntity(@Nullable HttpResponseBody<D> body,
+                              @NonNull HttpStatusCode httpStatus,
+                              @Nullable MultiValueMap<String, String> headers) {
         super(body, headers, httpStatus);
     }
 
+    @NonNull
     public HttpResponseEntity<D> fork() {
         return new HttpResponseEntity<>(getBody(), getStatusCode(), getHeaders());
     }
 
-    public HttpResponseEntity<D> fork(HttpResponseBody<D> newResponseBody) {
+    @NonNull
+    public HttpResponseEntity<D> fork(@Nullable HttpResponseBody<D> newResponseBody) {
         return new HttpResponseEntity<>(newResponseBody, getStatusCode(), getHeaders());
     }
 

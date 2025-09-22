@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 RollW
+ * Copyright (C) 2023-2025 RollW
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,15 @@
 
 package tech.rollw.common.web.system.validate;
 
-import space.lingu.NonNull;
+import space.lingu.Experimental;
+import org.jspecify.annotations.NonNull;
 import tech.rollw.common.web.system.SystemResourceKind;
 import tech.rollw.common.web.system.UnsupportedKindException;
 
 /**
  * @author RollW
  */
+@Experimental(info = "This interface is experimental and maybe changed in the future.")
 public interface ValidatorProvider {
     @NonNull
     Validator getValidator(@NonNull SystemResourceKind systemResourceKind)

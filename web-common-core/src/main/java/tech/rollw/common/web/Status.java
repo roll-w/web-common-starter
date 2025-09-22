@@ -16,6 +16,10 @@
 
 package tech.rollw.common.web;
 
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import java.util.Objects;
 
 /**
@@ -27,28 +31,33 @@ public final class Status {
 
     public static final Status SUCCESS = Status.from(CommonErrorCode.SUCCESS);
 
-    public Status(ErrorCode errorCode, String message) {
+    public Status(@NonNull ErrorCode errorCode,@Nullable String message) {
         this.errorCode = errorCode;
         this.message = message;
     }
 
+    @NonNull
     public ErrorCode getErrorCode() {
         return errorCode;
     }
 
+    @Nullable
     public String getMessage() {
         return message;
     }
 
+    @NonNull
     public static Builder builder() {
         return new Builder();
     }
 
+    @NonNull
     public Builder toBuilder() {
         return new Builder(this);
     }
 
-    public Status withMessage(String message) {
+    @NonNull
+    public Status withMessage(@Nullable String message) {
         return new Status(this.errorCode, message);
     }
 
@@ -71,7 +80,8 @@ public final class Status {
                 '}';
     }
 
-    public static Status from(ErrorCode errorCode) {
+    @NonNull
+    public static Status from(@NonNull ErrorCode errorCode) {
         return new Status(errorCode, null);
     }
 
@@ -87,16 +97,17 @@ public final class Status {
             this.message = other.message;
         }
 
-        public Builder errorCode(ErrorCode errorCode) {
+        public Builder errorCode(@NonNull ErrorCode errorCode) {
             this.errorCode = errorCode;
             return this;
         }
 
-        public Builder message(String message) {
+        public Builder message(@Nullable String message) {
             this.message = message;
             return this;
         }
 
+        @NonNull
         public Status build() {
             return new Status(errorCode, message);
         }

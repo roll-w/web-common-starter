@@ -16,7 +16,7 @@
 
 package tech.rollw.common.web;
 
-import space.lingu.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import java.io.Serializable;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 RollW
+ * Copyright (C) 2023-2025 RollW
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,18 @@
 
 package tech.rollw.common.web.system.validate;
 
+import space.lingu.Experimental;
+
 /**
- * Like the default implementation ({@link DefaultFieldType}),
+ * Like the default implementation ({@link CommonFieldType}),
  * needs to define an enum class to implement this interface
  * (suggest using {@link Enum}, but can also define a class that
  * implements this interface, its depend on your needs).
  *
  * @author RollW
- * @see DefaultFieldType
+ * @see CommonFieldType
  */
+@Experimental(info = "This interface is experimental and maybe changed in the future.")
 public interface FieldType {
     String getName();
 }

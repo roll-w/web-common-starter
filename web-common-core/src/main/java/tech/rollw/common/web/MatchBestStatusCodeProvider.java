@@ -16,6 +16,7 @@
 
 package tech.rollw.common.web;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpMethod;
 
 /**
@@ -28,7 +29,7 @@ import org.springframework.http.HttpMethod;
  */
 public class MatchBestStatusCodeProvider implements StatusCodeProvider {
     @Override
-    public int getStatusCode(Status status, HttpMethod httpMethod) {
+    public int getStatusCode(@NonNull Status status, @NonNull HttpMethod httpMethod) {
         int code = status.getErrorCode().getStatus();
         if (code != 200) {
             return code;

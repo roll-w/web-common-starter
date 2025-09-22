@@ -16,7 +16,7 @@
 
 package tech.rollw.common;
 
-import space.lingu.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.HashMap;
 import java.util.List;

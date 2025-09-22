@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 RollW
+ * Copyright (C) 2023-2025 RollW
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package tech.rollw.common;
 
-import space.lingu.NonNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Help to cast the object to the specified type.
@@ -24,6 +24,7 @@ import space.lingu.NonNull;
  * @author RollW
  */
 public interface Castable {
+    @NonNull
     default <T> T cast(@NonNull Class<T> clazz) {
         return clazz.cast(this);
     }

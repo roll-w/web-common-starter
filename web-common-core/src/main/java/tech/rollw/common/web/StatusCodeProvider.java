@@ -16,11 +16,12 @@
 
 package tech.rollw.common.web;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpMethod;
 
 /**
  * @author RollW
  */
 public interface StatusCodeProvider {
-    int getStatusCode(Status status, HttpMethod httpMethod);
+    int getStatusCode(@NonNull Status status, @NonNull HttpMethod httpMethod);
 }

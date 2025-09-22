@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 RollW
+ * Copyright (C) 2023-2025 RollW
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 
 package tech.rollw.common.web.system.defaults;
 
-import space.lingu.NonNull;
-import space.lingu.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import tech.rollw.common.web.AuthErrorCode;
 import tech.rollw.common.web.system.Action;
 import tech.rollw.common.web.system.Operator;

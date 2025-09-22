@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 RollW
+ * Copyright (C) 2023-2025 RollW
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-import space.lingu.NonNull;
+import org.jspecify.annotations.NonNull;
 import tech.rollw.common.web.ErrorCodeMessageProvider;
 import tech.rollw.common.web.HttpResponseBody;
 import tech.rollw.common.web.HttpResponseEntity;

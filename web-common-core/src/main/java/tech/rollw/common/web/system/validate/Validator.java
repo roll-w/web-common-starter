@@ -16,7 +16,8 @@
 
 package tech.rollw.common.web.system.validate;
 
-import space.lingu.NonNull;
+import space.lingu.Experimental;
+import org.jspecify.annotations.NonNull;
 import tech.rollw.common.web.CommonRuntimeException;
 import tech.rollw.common.web.ErrorCode;
 import tech.rollw.common.web.system.SystemResourceSupportable;
@@ -24,6 +25,7 @@ import tech.rollw.common.web.system.SystemResourceSupportable;
 /**
  * @author RollW
  */
+@Experimental(info = "This interface is experimental and maybe changed in the future.")
 public interface Validator extends SystemResourceSupportable {
     default void validateThrows(Object value, @NonNull FieldType fieldType)
             throws CommonRuntimeException {
@@ -35,5 +37,4 @@ public interface Validator extends SystemResourceSupportable {
 
     @NonNull
     ErrorCode validate(Object value, @NonNull FieldType fieldType);
-
 }

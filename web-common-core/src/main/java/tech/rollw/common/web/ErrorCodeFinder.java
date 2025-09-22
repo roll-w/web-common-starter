@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 RollW
+ * Copyright (C) 2023-2025 RollW
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package tech.rollw.common.web;
 
-import space.lingu.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
