@@ -16,6 +16,7 @@
 
 package tech.rollw.common.web.components;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -29,17 +30,11 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-import org.jspecify.annotations.NonNull;
 import tech.rollw.common.web.ErrorCodeMessageProvider;
 import tech.rollw.common.web.HttpResponseBody;
 import tech.rollw.common.web.HttpResponseEntity;
-import tech.rollw.common.web.PageableHttpResponseBody;
 import tech.rollw.common.web.Status;
 import tech.rollw.common.web.StatusCodeProvider;
-import tech.rollw.common.web.page.Page;
-import tech.rollw.common.web.system.ContextThread;
-import tech.rollw.common.web.system.ContextThreadAware;
-import tech.rollw.common.web.system.paged.PageableContext;
 
 import java.util.Objects;
 
@@ -54,16 +49,13 @@ import java.util.Objects;
 public class ControllerResponseBodyAdvice implements ResponseBodyAdvice<Object> {
     private final ErrorCodeMessageProvider errorCodeMessageProvider;
     private final MessageSource messageSource;
-    private final ContextThreadAware<PageableContext> contextThreadAware;
     private final StatusCodeProvider statusCodeProvider;
 
     public ControllerResponseBodyAdvice(ErrorCodeMessageProvider errorCodeMessageProvider,
                                         MessageSource messageSource,
-                                        ContextThreadAware<PageableContext> contextThreadAware,
                                         StatusCodeProvider statusCodeProvider) {
         this.errorCodeMessageProvider = errorCodeMessageProvider;
         this.messageSource = messageSource;
-        this.contextThreadAware = contextThreadAware;
         this.statusCodeProvider = statusCodeProvider;
     }
 
@@ -93,20 +85,6 @@ public class ControllerResponseBodyAdvice implements ResponseBodyAdvice<Object> 
         }
         if (!(obj instanceof HttpResponseBody<?> body)) {
             return obj;
-        }
-        Object data = body.getData();
-        if (data instanceof Page<?> dataList && !(body instanceof PageableHttpResponseBody<?>)) {
-            ContextThread<PageableContext> contextThread =
-                    contextThreadAware.getContextThread();
-            if (contextThread.hasContext()) {
-                PageableContext pageableContext = contextThread.getContext();
-                @SuppressWarnings("unchecked")
-                Page<Object> objectPage = (Page<Object>) pageableContext.toPage(dataList);
-                body = new PageableHttpResponseBody<>(
-                        body.getStatus(),
-                        objectPage
-                );
-            }
         }
         HttpMethod method = request.getMethod();
         String rawMessage = body.getStatus().getMessage();

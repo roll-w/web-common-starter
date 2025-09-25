@@ -26,8 +26,6 @@ import tech.rollw.common.web.ErrorCodeMessageProvider;
 import tech.rollw.common.web.MatchBestStatusCodeProvider;
 import tech.rollw.common.web.StatusCodeProvider;
 import tech.rollw.common.web.components.ControllerResponseBodyAdvice;
-import tech.rollw.common.web.system.ContextThreadAware;
-import tech.rollw.common.web.system.paged.PageableContext;
 
 /**
  * @author RollW
@@ -40,10 +38,9 @@ public class SystemWebAutoConfiguration {
     public ControllerResponseBodyAdvice controllerResponseBodyAdvice(
             ErrorCodeMessageProvider errorCodeMessageProvider,
             MessageSource messageSource,
-            ContextThreadAware<PageableContext> pageableContextFactory,
             StatusCodeProvider statusCodeProvider
     ) {
-        return new ControllerResponseBodyAdvice(errorCodeMessageProvider, messageSource, pageableContextFactory, statusCodeProvider);
+        return new ControllerResponseBodyAdvice(errorCodeMessageProvider, messageSource, statusCodeProvider);
     }
 
     @Bean

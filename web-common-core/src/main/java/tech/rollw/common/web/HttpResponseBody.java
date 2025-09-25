@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 RollW
+ * Copyright (C) 2023-2025 RollW
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ package tech.rollw.common.web;
  * @author RollW
  */
 @SuppressWarnings("unchecked")
-public sealed class HttpResponseBody<D> permits PageableHttpResponseBody {
+public class HttpResponseBody<D> {
     private static final HttpResponseBody<?> SUCCESS = new HttpResponseBody<>(Status.SUCCESS, null);
 
     protected final Status status;

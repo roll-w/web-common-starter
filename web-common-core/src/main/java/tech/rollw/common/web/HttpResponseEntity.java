@@ -21,9 +21,6 @@ import org.jspecify.annotations.Nullable;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
-import tech.rollw.common.web.page.Page;
-
-import java.util.List;
 
 /**
  * Extension of {@link ResponseEntity}. Used in {@code RestTemplate} as well
@@ -134,10 +131,6 @@ public class HttpResponseEntity<D> extends ResponseEntity<HttpResponseBody<D>> {
         return of(HttpResponseBody.success(message, data));
     }
 
-    public static <D> HttpResponseEntity<List<D>> success(Page<D> page) {
-        return of(PageableHttpResponseBody.success(page));
-    }
-
     public static <D> HttpResponseEntity<D> of(ErrorCode errorCode,
                                                String message) {
         return of(HttpResponseBody.of(errorCode, message));
@@ -157,13 +150,6 @@ public class HttpResponseEntity<D> extends ResponseEntity<HttpResponseBody<D>> {
                 HttpResponseBody.builder(data)
                         .status(Status.from(errorCode))
                         .build()
-        );
-    }
-
-    public static <D> HttpResponseEntity<List<D>> of(ErrorCode errorCode,
-                                                     Page<D> page) {
-        return of(
-                PageableHttpResponseBody.of(errorCode, page)
         );
     }
 }
